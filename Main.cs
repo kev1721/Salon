@@ -165,6 +165,7 @@ namespace Style
             if (dgvClients.SelectedRows.Count > 0)
             {
                 currDgvPositionClients = dgvClients.SelectedRows[0].Index;
+                //int id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
                 fl = true;
             }
 
@@ -184,10 +185,10 @@ namespace Style
 
             OrderByClients(nameColumnOrderClients, sortColumnOrderClients);
 
-            if (fl)
-            {
-                searchClients(currDgvPositionClients-1);
-            }
+            //if (fl)
+            //{
+            //    searchClients(id_client + 1);
+            //}
         }
 
         void setLabelBirthDays(DataSet _birthdayClient)
@@ -285,8 +286,11 @@ namespace Style
                         {
                             dgvClients.Rows[i].Selected = true;
                             dgvClients.FirstDisplayedScrollingRowIndex = i;
+                            dgvClients.CurrentCell = dgvClients.SelectedRows[0].Cells["FirstName"];
 
                             int id_clientNew = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+                            //searchClients(id_client);
+
                             GetDataVisits();
                             if (id_client != id_clientNew && dgvVisits.RowCount > 0)
                                 dgvVisits.Rows[0].Selected = true;
@@ -298,7 +302,6 @@ namespace Style
                             MiddleName = (string)GetCurrRowClientInDGV.Cells["MiddleName"].Value;
                             if (GetCurrRowClientInDGV.Cells["BirthDay"].Value != DBNull.Value)
                                 BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
-
                         }
                     }
             }
@@ -507,7 +510,6 @@ namespace Style
                 FirstName = (string)GetCurrRowClientInDGV.Cells["FirstName"].Value;
                 LastName = (string)GetCurrRowClientInDGV.Cells["LastName"].Value;
                 MiddleName = (string)GetCurrRowClientInDGV.Cells["MiddleName"].Value;
-                BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
                
                 if (GetCurrRowClientInDGV.Cells["BirthDay"].Value != DBNull.Value)
                     BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
@@ -554,8 +556,12 @@ namespace Style
             frmNewVisit newVisit = new frmNewVisit(false, this);
             if (newVisit.ShowDialog() == DialogResult.OK)
             {
+ //               int id_clientNew = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+
+ //               searchClients(id_clientNew);
                 GetDataVisits();
                 GetDataClients();
+
 
                 if (newVisit.idNewVisit > 0)
                     for (int i = 0; i < dgvVisits.Rows.Count; i++)
@@ -565,8 +571,15 @@ namespace Style
                         {
                             dgvVisits.Rows[i].Selected = true;
                             dgvVisits.FirstDisplayedScrollingRowIndex = i;
+
+
+ //                           GetDataVisits();
+
                         }
                     }
+
+
+                //searchVisits(newVisit.idNewVisit);
             }
             newVisit.Dispose();
         }
@@ -615,8 +628,15 @@ namespace Style
                     log.Info("id_visit = " + currIdVisit +" id_client = " +id_client);
                     
                     Program.dbStyle.DeleteVisit(currIdVisit);
+
                     GetDataVisits();
                     GetDataClients();
+
+ //                   int id_clientNew = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+
+ //                   searchClients(id_clientNew);
+
+                    
                 }
             }
         }
@@ -729,8 +749,12 @@ namespace Style
                                 dgvClients.Rows[idx].Selected = true;
                                 //dgvClients.FirstDisplayedScrollingRowIndex = selIndex + 1;
                                 dgvClients.FirstDisplayedScrollingRowIndex = idx;
-                                
+                                dgvClients.CurrentCell = dgvClients.SelectedRows[0].Cells["FirstName"];
+
+                                //GetDataVisits();
+
                                 int id_clientNew = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+                                
                                 GetDataVisits();
                                 if (id_client != id_clientNew && dgvVisits.RowCount > 0)
                                     dgvVisits.Rows[0].Selected = true;

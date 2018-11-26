@@ -176,6 +176,8 @@
             this.dgvMaterials.AllowUserToAddRows = false;
             this.dgvMaterials.AllowUserToDeleteRows = false;
             this.dgvMaterials.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvMaterials.ColumnHeadersHeight = 20;
+            this.dgvMaterials.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvMaterials.Location = new System.Drawing.Point(0, 31);
             this.dgvMaterials.Name = "dgvMaterials";
             this.dgvMaterials.RowHeadersVisible = false;
@@ -310,6 +312,8 @@
             this.dgvStyles.AllowUserToAddRows = false;
             this.dgvStyles.AllowUserToDeleteRows = false;
             this.dgvStyles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvStyles.ColumnHeadersHeight = 20;
+            this.dgvStyles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvStyles.Location = new System.Drawing.Point(0, 31);
             this.dgvStyles.Name = "dgvStyles";
             this.dgvStyles.RowHeadersVisible = false;
@@ -429,6 +433,8 @@
             this.dgvConsults.AllowUserToAddRows = false;
             this.dgvConsults.AllowUserToDeleteRows = false;
             this.dgvConsults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvConsults.ColumnHeadersHeight = 20;
+            this.dgvConsults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvConsults.Location = new System.Drawing.Point(0, 31);
             this.dgvConsults.Name = "dgvConsults";
             this.dgvConsults.RowHeadersVisible = false;

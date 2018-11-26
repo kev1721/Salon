@@ -57,13 +57,13 @@ namespace Style
 
             if (refs == References.UsersPrg) 
                 addCmbBxToDGV(dataGridView1, "id_access", "Уровень доступа", "id", "NameAccess", "AccessLevel");
+            if (refs == References.Styles)
+                addCmbBxToDGV(dataGridView1, "id_typeStyle", "Категория услуги", "id", "name_type", "TypesStyles");
 
             setOrderDGV();
 
             if ((refs == References.Styles || refs == References.Materials) && _isSelectMode)
-            {
                 dataGridView1.MultiSelect = true;
-            }
         }
 
         bool isSelectMode = false;
@@ -84,6 +84,7 @@ namespace Style
         {
             _dgv.AutoGenerateColumns = false;
             DataGridViewComboBoxColumn dgvCmbBx = new DataGridViewComboBoxColumn();
+            dgvCmbBx.Name = displayMember;
             dgvCmbBx.DataPropertyName = dataPropertyName;
             dgvCmbBx.HeaderText = headerText;
             dgvCmbBx.DropDownWidth = 160;
@@ -91,11 +92,14 @@ namespace Style
             //            dgvCmbBx.MaxDropDownItems = 2;
             dgvCmbBx.FlatStyle = FlatStyle.Flat;
 
-            dgvCmbBx.DataSource = Program.dbStyle.GetDataReference("Select distinct " + valueMember + ", " + displayMember + " from [" + tableMember + "]", true);
+            dgvCmbBx.DataSource = Program.dbStyle.GetDataReference("Select distinct " + valueMember + ", " + displayMember + " from [" + tableMember + "]", true); 
+
             dgvCmbBx.ValueMember = valueMember;
             dgvCmbBx.DisplayMember = displayMember;
 
             //            dataGridView1.Columns.Insert(dataGridView1.ColumnCount, dgvCmbBx);
+            if (refs == References.Styles && isSelectMode)
+                dgvCmbBx.ReadOnly = true;
             _dgv.Columns.Add(dgvCmbBx);
         }
 
@@ -117,7 +121,15 @@ namespace Style
                     dataGridView1.Sort(dataGridView1.Columns["name_m"], ListSortDirection.Ascending);
                     break;
                 case References.Styles:
-                    dataGridView1.Sort(dataGridView1.Columns["name_style"], ListSortDirection.Ascending);
+                    //id_typeStyle
+                    //dataGridView1.Sort(dataGridView1.Columns["name_style"], ListSortDirection.Ascending);
+                    foreach (DataGridViewColumn column in dataGridView1.Columns)
+                    {
+                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        column.HeaderCell.SortGlyphDirection = SortOrder.None;
+                    }
+                    bindingSource1.Sort = "id_typeStyle DESC, name_style ASC";
+                    dataGridView1.Columns["id"].Visible = false;
                     break;
                 case References.Employes:
                     dataGridView1.Sort(dataGridView1.Columns["FIO"], ListSortDirection.Ascending);
@@ -164,7 +176,6 @@ namespace Style
                     dataGridView1.Columns["Pass"].HeaderText = "Пароль";
                     dataGridView1.Columns["isLeave"].HeaderText = "Уволен";
                     //dataGridView1.Columns["UserName"].HeaderText = "Имя пользователя";
-
                     break;
                 case References.AccessLevel:
                     dataGridView1.Columns["NameAccess"].HeaderText = "Уровень доступа";
@@ -183,11 +194,16 @@ namespace Style
             {
                 if (refs == References.Materials && isSelectMode)
                     bindingSource1.DataSource = Program.dbStyle.GetDataReference("Select * from " + "[" + ti.TableName + "] where [" + ti.TableName+"].unused = false", false);
+                else if (refs == References.Styles)
+                    bindingSource1.DataSource = Program.dbStyle.GetDataReference("Select * from " + "[" + ti.TableName + "]", false);
                 else
                     bindingSource1.DataSource = Program.dbStyle.GetDataReference("Select * from " + "[" + ti.TableName + "]", false);
             }
             else
                 bindingSource1.DataSource = Program.dbStyle.GetClientsBirthday(DateTime.Now);
+
+
+
 
             dataGridView1.DataSource = bindingSource1;
             bindingNavigator1.BindingSource = bindingSource1;
@@ -263,6 +279,7 @@ namespace Style
             currStyle.Id = -1;
             currStyle.Id_style = (int)dataGridView1.CurrentRow.Cells["id"].Value;
             currStyle.Name_st = dataGridView1.CurrentRow.Cells["name_style"].Value.ToString();
+            currStyle.TypeStyle = dataGridView1.CurrentRow.Cells["name_type"].FormattedValue.ToString();
             currStyle.Id_employ = -1;
             currStyle.Cost = 0;
         }
@@ -290,7 +307,7 @@ namespace Style
                     setupTableInfo("Employ", "Специалисты", new string[1] {"id" });
                     break;
                 case References.Styles:
-                    setupTableInfo("Styles", "Услуги", new string[1] {"id"  });
+                    setupTableInfo("Styles", "Услуги", new string[2] {"id", "id_typeStyle"});
                     break;
                 case References.ClientsWidthBirthday:
                     setupTableInfo("Clients", "Клиенты", new string[4] { "id_client",  "Address", "Birthday", "Notes" });

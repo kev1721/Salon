@@ -53,7 +53,8 @@ namespace Style
                 FillBufFields(); //заполнение буфера 
             }
 
-            addCmbBxToDGV(dgvStyles, "id_employ", "Исполнитель", "id", "FIO", "Employ");
+            addCmbBxToDGV(dgvStyles, "id_employ", "Исполнитель", "id", "FIO", "Employ", false);
+            //addCmbBxToDGV(dgvStyles, "id_typeStyle", "Тип услуги", "id", "name_type", "TypesStyles", false);
 
             setDgvStylesOrderColumns();
             //setupColumnsDGV(dgvMaterials);
@@ -80,8 +81,10 @@ namespace Style
                 }
             }
 
-            dgvStyles.Columns[2].Width = 350;
-            dgvStyles.Columns[3].Width = 125;
+            dgvStyles.Columns[2].Width = 325;
+            dgvStyles.Columns[3].Width = 100;
+            //dgvStyles.Columns[4].Width = 150;
+            dgvStyles.Columns[5].Width = 150;
 
             dgvMaterials.Columns[2].Width = 350;
             dgvMaterials.Columns[3].Width = 125;
@@ -120,9 +123,10 @@ namespace Style
 
         private void setDgvStylesOrderColumns()
         {
-            dgvStyles.Columns[2].DisplayIndex = 0;
-            dgvStyles.Columns[3].DisplayIndex = 2;
-            dgvStyles.Columns[4].DisplayIndex = 1;
+            dgvStyles.Columns[2].DisplayIndex = 0; //наименование услуги
+            dgvStyles.Columns[3].DisplayIndex = 1; //тип услуги
+            dgvStyles.Columns[4].DisplayIndex = 3; //исполнитель 
+            dgvStyles.Columns[5].DisplayIndex = 2; //стоимость
         }
 
         /// <summary>
@@ -133,7 +137,7 @@ namespace Style
         /// <param name="valueMember">Имя колонки из связанной таблицы</param>
         /// <param name="displayMember">Отображаемая колонка из связанной таблицы</param>
         /// <param name="tableMember">Связанная таблица</param>
-        private void addCmbBxToDGV(DataGridView _dgv, string dataPropertyName, string headerText, string valueMember, string displayMember, string tableMember)
+        private void addCmbBxToDGV(DataGridView _dgv, string dataPropertyName, string headerText, string valueMember, string displayMember, string tableMember, bool isReadOnly)
         {
             _dgv.AutoGenerateColumns = false;
             DataGridViewComboBoxColumn dgvCmbBx = new DataGridViewComboBoxColumn();
@@ -151,7 +155,7 @@ namespace Style
 
             dgvCmbBx.ValueMember = valueMember;
             dgvCmbBx.DisplayMember = displayMember;
-
+            dgvCmbBx.ReadOnly = isReadOnly;
             //            dataGridView1.Columns.Insert(dataGridView1.ColumnCount, dgvCmbBx);
             _dgv.Columns.Add(dgvCmbBx);
         }
@@ -207,6 +211,9 @@ namespace Style
 
             dgvStyles.Columns.Add("name_st", "Услуга");
             dgvStyles.Columns[2].ReadOnly = true;
+
+            dgvStyles.Columns.Add("typeStyle", "Категория услуги");
+            dgvStyles.Columns[3].ReadOnly = true;
 
             
             //dgvStyles.Columns.Add("id_employ", "Исполнитель");

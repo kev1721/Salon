@@ -922,9 +922,10 @@ namespace Style
             DataTable dt = new DataTable();
             StylesVisit stylesVisit = new StylesVisit();
             StyleVisit style = null;
-            string querySQL = "Select StylesVisit.*, Styles.name_style " +
-                " from [StylesVisit], [Styles] " +
+            string querySQL = "Select StylesVisit.*, Styles.name_style, TypesStyles.name_type " +
+                " from [StylesVisit], [Styles], [TypesStyles] " +
                 " WHERE StylesVisit.id_style = Styles.id " +
+                " AND Styles.id_typeStyle = TypesStyles.id  " +
                 " AND StylesVisit.id_visit=" + id_visit;
 
             if (conn.State != System.Data.ConnectionState.Open)
@@ -950,6 +951,7 @@ namespace Style
                             style.Id_employ = (int)r["id_employ"];
                             style.Cost = (float)r["cost"];
                             style.Name_st = r["name_style"] == DBNull.Value ? "" : (string)r["name_style"];
+                            style.TypeStyle = r["name_type"] == DBNull.Value ? "" : (string)r["name_type"];
                             
                             stylesVisit.Add(style);
                         }
@@ -1650,6 +1652,7 @@ namespace Style
         string name_st = "";
         int id_employ = 0;
         float cost = 0;
+        string typeStyle = "";
 
         public int Id
         {
@@ -1681,6 +1684,13 @@ namespace Style
             set { cost = value; }
         }
 
+        public string TypeStyle
+        {
+            get { return typeStyle; }
+            set { typeStyle = value; }
+
+        }
+
         #region ICloneable Members
 
         public object Clone()
@@ -1691,6 +1701,7 @@ namespace Style
             clone.name_st = this.name_st;
             clone.id_employ = this.id_employ;
             clone.cost = this.cost;
+            clone.typeStyle = this.typeStyle;
             return clone;
         }
 
