@@ -28,7 +28,7 @@ namespace Style
             int[] countStylesInDay = new int[countDaysInMonth]; //общее число услуг, выполненных за каждый день
 
             DateTime _dt1 = new DateTime(dt.Year, dt.Month, 1);
-            DateTime _dt2 = new DateTime(dt.Year, dt.Month + 1, 1).AddSeconds(-1);
+            DateTime _dt2 = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month)).AddDays(1).AddSeconds(-1);
 
             Program.dbStyle.GetCountVisitsInMonth(_dt1, _dt2, id_employ, countDaysInMonth, out countVisitsInDay, out totalCountVisitsInMonth);
             Program.dbStyle.GetTotalListStylesInMonth(_dt1, _dt2, id_employ, countDaysInMonth, ref infoStylesInMonth);

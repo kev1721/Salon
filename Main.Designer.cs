@@ -126,11 +126,11 @@
             this.dgvClients.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvClients.Size = new System.Drawing.Size(614, 667);
             this.dgvClients.TabIndex = 0;
-            this.dgvClients.Sorted += new System.EventHandler(this.dgvClients_Sorted);
+            this.dgvClients.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dgvClients.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dgvClients.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvClients_RowPrePaint);
-            this.dgvClients.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dgvClients.SelectionChanged += new System.EventHandler(this.dgvClients_SelectionChanged);
+            this.dgvClients.Sorted += new System.EventHandler(this.dgvClients_Sorted);
             // 
             // contextMenuStripClients
             // 
@@ -139,26 +139,26 @@
             this.ToolStripMenuItemEdit,
             this.ToolStripMenuItemDelete});
             this.contextMenuStripClients.Name = "contextMenuStripClients";
-            this.contextMenuStripClients.Size = new System.Drawing.Size(153, 92);
+            this.contextMenuStripClients.Size = new System.Drawing.Size(129, 70);
             // 
             // ToolStripMenuItemAddClient
             // 
             this.ToolStripMenuItemAddClient.Name = "ToolStripMenuItemAddClient";
-            this.ToolStripMenuItemAddClient.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemAddClient.Size = new System.Drawing.Size(128, 22);
             this.ToolStripMenuItemAddClient.Text = "Добавить";
             this.ToolStripMenuItemAddClient.Click += new System.EventHandler(this.ToolStripMenuItemAddClient_Click);
             // 
             // ToolStripMenuItemEdit
             // 
             this.ToolStripMenuItemEdit.Name = "ToolStripMenuItemEdit";
-            this.ToolStripMenuItemEdit.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemEdit.Size = new System.Drawing.Size(128, 22);
             this.ToolStripMenuItemEdit.Text = "Изменить";
             this.ToolStripMenuItemEdit.Click += new System.EventHandler(this.ToolStripMenuItemEdit_Click);
             // 
             // ToolStripMenuItemDelete
             // 
             this.ToolStripMenuItemDelete.Name = "ToolStripMenuItemDelete";
-            this.ToolStripMenuItemDelete.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemDelete.Size = new System.Drawing.Size(128, 22);
             this.ToolStripMenuItemDelete.Text = "Удалить";
             this.ToolStripMenuItemDelete.Click += new System.EventHandler(this.ToolStripMenuItemDelete_Click);
             // 
@@ -204,7 +204,7 @@
             this.toolStripStatusLabelBirthDay.AutoToolTip = true;
             this.toolStripStatusLabelBirthDay.IsLink = true;
             this.toolStripStatusLabelBirthDay.Name = "toolStripStatusLabelBirthDay";
-            this.toolStripStatusLabelBirthDay.Size = new System.Drawing.Size(72, 20);
+            this.toolStripStatusLabelBirthDay.Size = new System.Drawing.Size(76, 20);
             this.toolStripStatusLabelBirthDay.Text = "ДР клиентов";
             this.toolStripStatusLabelBirthDay.ToolTipText = "День рождения";
             this.toolStripStatusLabelBirthDay.Click += new System.EventHandler(this.toolStripStatusLabelBirthDay_Click);
@@ -236,7 +236,7 @@
             this.ToolStripMenuItemReport,
             this.ToolStripMenuItemExit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.fileToolStripMenuItem.Text = "Файл";
             // 
             // ToolStripMenuItemReport
@@ -245,27 +245,27 @@
             this.ReportMonthToolStripMenuItem,
             this.ReportYearToolStripMenuItem});
             this.ToolStripMenuItemReport.Name = "ToolStripMenuItemReport";
-            this.ToolStripMenuItemReport.Size = new System.Drawing.Size(126, 22);
+            this.ToolStripMenuItemReport.Size = new System.Drawing.Size(124, 22);
             this.ToolStripMenuItemReport.Text = "Отчеты...";
             // 
             // ReportMonthToolStripMenuItem
             // 
             this.ReportMonthToolStripMenuItem.Name = "ReportMonthToolStripMenuItem";
-            this.ReportMonthToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.ReportMonthToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.ReportMonthToolStripMenuItem.Text = "за месяц";
             this.ReportMonthToolStripMenuItem.Click += new System.EventHandler(this.ReportMonthToolStripMenuItem_Click);
             // 
             // ReportYearToolStripMenuItem
             // 
             this.ReportYearToolStripMenuItem.Name = "ReportYearToolStripMenuItem";
-            this.ReportYearToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.ReportYearToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.ReportYearToolStripMenuItem.Text = "за год";
             this.ReportYearToolStripMenuItem.Click += new System.EventHandler(this.ReportYearToolStripMenuItem_Click);
             // 
             // ToolStripMenuItemExit
             // 
             this.ToolStripMenuItemExit.Name = "ToolStripMenuItemExit";
-            this.ToolStripMenuItemExit.Size = new System.Drawing.Size(126, 22);
+            this.ToolStripMenuItemExit.Size = new System.Drawing.Size(124, 22);
             this.ToolStripMenuItemExit.Text = "Выход";
             this.ToolStripMenuItemExit.Click += new System.EventHandler(this.выхожToolStripMenuItem_Click);
             // 
@@ -277,41 +277,41 @@
             this.ToolStripMenuItemMaterials,
             this.usersToolStripMenuItem});
             this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
-            this.setupToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
+            this.setupToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
             this.setupToolStripMenuItem.Text = "Справочники";
             // 
             // ToolStripMenuItemEmploye
             // 
             this.ToolStripMenuItemEmploye.Name = "ToolStripMenuItemEmploye";
-            this.ToolStripMenuItemEmploye.Size = new System.Drawing.Size(146, 22);
+            this.ToolStripMenuItemEmploye.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemEmploye.Text = "Специалисты";
             this.ToolStripMenuItemEmploye.Click += new System.EventHandler(this.ToolStripMenuItemEmploye_Click);
             // 
             // ToolStripMenuItemService
             // 
             this.ToolStripMenuItemService.Name = "ToolStripMenuItemService";
-            this.ToolStripMenuItemService.Size = new System.Drawing.Size(146, 22);
+            this.ToolStripMenuItemService.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemService.Text = "Услуги";
             this.ToolStripMenuItemService.Click += new System.EventHandler(this.ToolStripMenuItemService_Click);
             // 
             // ToolStripMenuItemMaterials
             // 
             this.ToolStripMenuItemMaterials.Name = "ToolStripMenuItemMaterials";
-            this.ToolStripMenuItemMaterials.Size = new System.Drawing.Size(146, 22);
+            this.ToolStripMenuItemMaterials.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemMaterials.Text = "Материалы";
             this.ToolStripMenuItemMaterials.Click += new System.EventHandler(this.ToolStripMenuItemMaterials_Click);
             // 
             // usersToolStripMenuItem
             // 
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            this.usersToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.usersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.usersToolStripMenuItem.Text = "Пользователи";
             this.usersToolStripMenuItem.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
             // 
             // оПрограммеToolStripMenuItem
             // 
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(100, 20);
             this.оПрограммеToolStripMenuItem.Text = "О программе..";
             this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click);
             // 
@@ -452,10 +452,10 @@
             this.dgvVisits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvVisits.Size = new System.Drawing.Size(744, 667);
             this.dgvVisits.TabIndex = 5;
-            this.dgvVisits.Sorted += new System.EventHandler(this.dgvVisits_Sorted);
             this.dgvVisits.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVisits_CellDoubleClick);
             this.dgvVisits.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvVisits_RowPrePaint);
             this.dgvVisits.SelectionChanged += new System.EventHandler(this.dgvVisits_SelectionChanged);
+            this.dgvVisits.Sorted += new System.EventHandler(this.dgvVisits_Sorted);
             // 
             // contextMenuStripVisits
             // 
@@ -464,26 +464,26 @@
             this.toolStripMenuItemEditVisit,
             this.toolStripMenuItemDeleteVisit});
             this.contextMenuStripVisits.Name = "contextMenuStripVisits";
-            this.contextMenuStripVisits.Size = new System.Drawing.Size(125, 70);
+            this.contextMenuStripVisits.Size = new System.Drawing.Size(129, 70);
             // 
             // ToolStripMenuItemAddVisit
             // 
             this.ToolStripMenuItemAddVisit.Name = "ToolStripMenuItemAddVisit";
-            this.ToolStripMenuItemAddVisit.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItemAddVisit.Size = new System.Drawing.Size(128, 22);
             this.ToolStripMenuItemAddVisit.Text = "Добавить";
             this.ToolStripMenuItemAddVisit.Click += new System.EventHandler(this.ToolStripMenuItemAddVisit_Click);
             // 
             // toolStripMenuItemEditVisit
             // 
             this.toolStripMenuItemEditVisit.Name = "toolStripMenuItemEditVisit";
-            this.toolStripMenuItemEditVisit.Size = new System.Drawing.Size(124, 22);
+            this.toolStripMenuItemEditVisit.Size = new System.Drawing.Size(128, 22);
             this.toolStripMenuItemEditVisit.Text = "Изменить";
             this.toolStripMenuItemEditVisit.Click += new System.EventHandler(this.ToolStripMenuItemEditVisit_Click);
             // 
             // toolStripMenuItemDeleteVisit
             // 
             this.toolStripMenuItemDeleteVisit.Name = "toolStripMenuItemDeleteVisit";
-            this.toolStripMenuItemDeleteVisit.Size = new System.Drawing.Size(124, 22);
+            this.toolStripMenuItemDeleteVisit.Size = new System.Drawing.Size(128, 22);
             this.toolStripMenuItemDeleteVisit.Text = "Удалить";
             this.toolStripMenuItemDeleteVisit.Click += new System.EventHandler(this.ToolStripMenuItemDeleteVisit_Click);
             // 
@@ -612,12 +612,13 @@
             this.Controls.Add(this.panelClients);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Система учета клиентов";
-            this.Load += new System.EventHandler(this.Main_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
+            this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvClients)).EndInit();
             this.contextMenuStripClients.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);

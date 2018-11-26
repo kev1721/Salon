@@ -559,6 +559,7 @@
             this.Controls.Add(this.txtBxCostStyle);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

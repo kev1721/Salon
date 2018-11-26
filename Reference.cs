@@ -84,6 +84,7 @@ namespace Style
         {
             _dgv.AutoGenerateColumns = false;
             DataGridViewComboBoxColumn dgvCmbBx = new DataGridViewComboBoxColumn();
+            dgvCmbBx.Name = displayMember;
             dgvCmbBx.DataPropertyName = dataPropertyName;
             dgvCmbBx.HeaderText = headerText;
             dgvCmbBx.DropDownWidth = 160;
@@ -96,6 +97,8 @@ namespace Style
             dgvCmbBx.DisplayMember = displayMember;
 
             //            dataGridView1.Columns.Insert(dataGridView1.ColumnCount, dgvCmbBx);
+            if (refs == References.Styles && isSelectMode)
+                dgvCmbBx.ReadOnly = true;
             _dgv.Columns.Add(dgvCmbBx);
         }
 
@@ -183,6 +186,8 @@ namespace Style
             {
                 if (refs == References.Materials && isSelectMode)
                     bindingSource1.DataSource = Program.dbStyle.GetDataReference("Select * from " + "[" + ti.TableName + "] where [" + ti.TableName+"].unused = false", false);
+                else if (refs == References.Styles)
+                    bindingSource1.DataSource = Program.dbStyle.GetDataReference("Select * from " + "[" + ti.TableName + "]", false);
                 else
                     bindingSource1.DataSource = Program.dbStyle.GetDataReference("Select * from " + "[" + ti.TableName + "]", false);
             }
@@ -262,7 +267,7 @@ namespace Style
             currStyle = new StyleVisit();
             currStyle.Id = -1;
             currStyle.Id_style = (int)dataGridView1.CurrentRow.Cells["id"].Value;
-            currStyle.Name_st = dataGridView1.CurrentRow.Cells["name_style"].Value.ToString();
+            currStyle.Name_st = dataGridView1.CurrentRow.Cells["name_style"].Value.ToString();            
             currStyle.Id_employ = -1;
             currStyle.Cost = 0;
         }
