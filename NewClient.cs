@@ -6,11 +6,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using log4net;
+using log4net.Config;
 
 namespace Style
 {
     public partial class NewClient : Form
     {
+        public static readonly ILog log = LogManager.GetLogger(typeof(NewClient));
+
         bool isEditMode = false;
         Main mainForm;
 
@@ -28,8 +32,10 @@ namespace Style
             if (_isEditMode)
             {
                 this.Text = "Изменение данных клиента";
-                FillTxtBx(_mainForm.GetRowCurrRowInDGV); //заполнение полей
+                FillTxtBx(_mainForm.GetCurrRowClientInDGV); //заполнение полей
                 FillBufFields(); //заполнение буфера 
+
+                btnSave.DialogResult = DialogResult.OK;
             }
             else
             {
@@ -149,23 +155,13 @@ namespace Style
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!isEditMode) //если режим добавления
-            {
-                addClient();
-                FillBufFields();
-            }
-            else
-            {
-                if (editClient())
-                    FillBufFields();
-            }
-            mainForm.GetData();
+
            
         }
 
         private void NewClient_FormClosed(object sender, FormClosedEventArgs e)
         {
-            mainForm.GetData();
+          //  mainForm.GetDataClients();
         }
 
         bool editClient()
@@ -179,14 +175,23 @@ namespace Style
             {
             }
 
-          return  Program.dbStyle.UpdateClient(id_client,
-                txtBxLastName.Text.Trim(' '), txtBxFirstName.Text.Trim(' '), txtBxMiddleName.Text.Trim(' '),
-                maskTxtBxTelMobile.Text.Trim(' '), maskTxtBxTelHome.Text.Trim(' '),
-                txtBxAddress.Text.Trim(' '),
-                dateTPBirthday.Value.Date,
-                discount,
-                txtBxNotes.Text.Trim(' ')
+            log.Info("/////////////////////////////////////////////////////////////////////////////////////////");
+            
+            log.Info("Attempt update client...");
+
+            log.Info("id_client = " + id_client + " LastName = " + txtBxLastName.Text.Trim(' ') + " FirstName = " + txtBxFirstName.Text.Trim(' ') +
+                " MiddleName = " + txtBxMiddleName.Text.Trim(' ') + " TelMobile = " + maskTxtBxTelMobile.Text.Trim(' ') + " TelHome = " + maskTxtBxTelHome.Text.Trim(' ') +
+                " Address = " + txtBxAddress.Text.Trim(' ') + " Birthday = " + dateTPBirthday.Value.Date + " discount = " + discount + " Notes = " + txtBxNotes.Text.Trim(' ')
                 );
+
+            return Program.dbStyle.UpdateClient(id_client,
+                  txtBxLastName.Text.Trim(' '), txtBxFirstName.Text.Trim(' '), txtBxMiddleName.Text.Trim(' '),
+                  maskTxtBxTelMobile.Text.Trim(' '), maskTxtBxTelHome.Text.Trim(' '),
+                  txtBxAddress.Text.Trim(' '),
+                  dateTPBirthday.Value.Date,
+                  discount,
+                  txtBxNotes.Text.Trim(' ')
+                  );
         }
 
 
@@ -201,6 +206,15 @@ namespace Style
             {
             }
 
+            log.Info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+            log.Info("Attempt insert client...");
+
+            log.Info("id_client = " + id_client + " LastName = " + txtBxLastName.Text.Trim(' ') + " FirstName = " + txtBxFirstName.Text.Trim(' ')+
+                " MiddleName = " + txtBxMiddleName.Text.Trim(' ') + " TelMobile = " + maskTxtBxTelMobile.Text.Trim(' ') + " TelHome = " + maskTxtBxTelHome.Text.Trim(' ') +
+                " Address = " + txtBxAddress.Text.Trim(' ') + " Birthday = " + dateTPBirthday.Value.Date + " discount = " + discount + " Notes = " + txtBxNotes.Text.Trim(' ')
+                );
+
             Program.dbStyle.InsertClient(txtBxLastName.Text.Trim(' '), txtBxFirstName.Text.Trim(' '), txtBxMiddleName.Text.Trim(' '),
                 maskTxtBxTelMobile.Text.Trim(' '), maskTxtBxTelHome.Text.Trim(' '),
                 txtBxAddress.Text.Trim(' '),
@@ -210,26 +224,102 @@ namespace Style
                 );
         }
 
+        bool isValidDiscountConst()
+        {
+            try
+            {
+                if (txtBxDiscountConst.Text.Length == 0)
+                    txtBxDiscountConst.Text = "0";
+                if (Convert.ToInt16(txtBxDiscountConst.Text) < 0 || Convert.ToInt16(txtBxDiscountConst.Text) > 100)
+                    return false;
+                else
+                    return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        bool isValidLengthAddress()
+        {
+            if (txtBxAddress.Text.Length>250)
+                return false;
+            else
+                return true;
+        }
+
+        bool isValidLengthNote()
+        {
+            if (txtBxNotes.Text.Length > 250)
+                return false;
+            else
+                return true;
+        }
+
+        bool isValid()
+        {
+            if (!isValidDiscountConst())
+            {
+                DialogResult dr = MessageBox.Show("Скидка должна быть в диапазоне от 0 до 100 %", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return false;
+            }
+            if (!isValidLengthAddress())
+            {
+                DialogResult dr = MessageBox.Show("Поле 'Адрес' не может быть больше 250 символов", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return false;                
+            }
+            if (!isValidLengthNote())
+            {
+                DialogResult dr = MessageBox.Show("Поле 'Примечание' не может быть больше 250 символов", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return false;
+            }
+
+            return true;
+        }
+
         private void NewClient_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (IsChangesData)
+            if (DialogResult == DialogResult.OK)
             {
-                if (isEditMode) //если режим изменения и данные изменены, то перед выходом спрашиваем
+                if (!isValid())
                 {
-                    DialogResult dr = MessageBox.Show("Данные клиента изменены. Закрыть окно без сохранения?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                    if (dr == System.Windows.Forms.DialogResult.No)
-                        e.Cancel = true;
+                    e.Cancel = true;
                 }
                 else
                 {
-                    DialogResult dr = MessageBox.Show("Клиент не добавлен в базу данных. Закрыть окно без добавления?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                    if (dr == System.Windows.Forms.DialogResult.No)
-                        e.Cancel = true;
+                    if (!isEditMode) //если режим добавления
+                    {
+                        addClient();
+                        FillBufFields();
+                    }
+                    else
+                    {
+                        if (editClient())
+                            FillBufFields();
+                    }
+                }
+                //mainForm.GetDataClients();
+
+            }
+            else
+            {
+                if (IsChangesData)
+                {
+                    if (isEditMode) //если режим изменения и данные изменены, то перед выходом спрашиваем
+                    {
+                        DialogResult dr = MessageBox.Show("Данные клиента изменены. Закрыть окно без сохранения?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                        if (dr == System.Windows.Forms.DialogResult.No)
+                            e.Cancel = true;
+                    }
+                    else
+                    {
+                        DialogResult dr = MessageBox.Show("Клиент не добавлен в базу данных. Закрыть окно без добавления?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                        if (dr == System.Windows.Forms.DialogResult.No)
+                            e.Cancel = true;
+                    }
                 }
             }
-
-
-
         }
     }
 }

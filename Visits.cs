@@ -21,10 +21,12 @@ namespace Style
             InitializeComponent();
 
             mainForm = _mainForm;
-            id_client = (int)_mainForm.GetRowCurrRowInDGV.Cells["id_client"].Value;
-
+            id_client = (int)mainForm.GetCurrRowClientInDGV.Cells["id_client"].Value;
+            this.Text = this.Text + " - " + mainForm.GetCurrRowClientInDGV.Cells["LastName"].Value.ToString() +
+                                    " " + mainForm.GetCurrRowClientInDGV.Cells["FirstName"].Value.ToString() +
+                                    " " + mainForm.GetCurrRowClientInDGV.Cells["MiddleName"].Value.ToString();
             dgvVisits.DataSource = visitsBindingSource;
-            GetData();
+            GetDataVisits();
             setNameColumnsDgvVisits();
         }
 
@@ -33,7 +35,7 @@ namespace Style
         public int id_client;
         int currDgvPosition;
 
-        public void GetData()
+        public void GetDataVisits()
         {
             DataSet data = new DataSet();
 
@@ -46,7 +48,7 @@ namespace Style
         /// <summary>
         /// получить текущую выбранную строку гриды "ПРочиеДокументы"
         /// </summary>
-        public DataGridViewRow GetRowCurrRowInDGV
+        public DataGridViewRow GetCurrRowVisitInDGV
         {
             get {
                 if (dgvVisits.SelectedRows.Count > 0)
@@ -58,45 +60,18 @@ namespace Style
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            if (findOpenForm("NewVisit"))
-                return;
-
-            frmNewVisit newVisit = new frmNewVisit(false, this);
-            newVisit.ShowDialog();
-            newVisit.Dispose();
+            AddVisit();
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+            DeleteVisit();
 
-            if (dgvVisits.SelectedRows.Count > 0)
-            {
-                DialogResult dr = MessageBox.Show("Удалить посещение?", "Внимание!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (dr == DialogResult.Yes)
-                {
-                    currDgvPosition = ((BindingSource)dgvVisits.DataSource).Position;
-                    UInt32 currIdVisit = Convert.ToUInt32(dgvVisits[dgvVisits.Columns["id_visit"].Index, dgvVisits.CurrentRow.Index].Value.ToString());
-                    Program.dbStyle.DeleteVisit(currIdVisit);
-                    GetData();
-                    try
-                    {
-                        dgvVisits.Rows[((BindingSource)dgvVisits.DataSource).Position].Selected = true;
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }
-            }
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            if (dgvVisits.SelectedRows.Count > 0)
-            {
-                frmNewVisit newVisite = new frmNewVisit(true, this);
-                newVisite.ShowDialog();
-                newVisite.Dispose();
-            }
+            EditVisit();
         }
 
         private void setNameColumnsDgvVisits()
@@ -131,7 +106,7 @@ namespace Style
                 dgvVisits.Columns["CostVisit"].HeaderText = "Сумма за посещение";
                 //dgvVisits.Columns["CostVisit"].Width = 50;
 
-                dgvVisits.Columns["Note"].HeaderText = "Примечание";
+                dgvVisits.Columns["Notes"].HeaderText = "Примечание";
                 //dgvVisits.Columns["Note"].Width = 300;
 
             }
@@ -148,5 +123,79 @@ namespace Style
 
             return false;
         }
+
+        private void dgvVisits_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //if (dgvVisits.SelectedRows.Count > 0)
+            //{
+            //    frmNewVisit newVisite = new frmNewVisit(true, this);
+            //    newVisite.ShowDialog();
+            //    newVisite.Dispose();
+            //}
+        }
+
+        void AddVisit()
+        {
+            //if (findOpenForm("NewVisit"))
+            //    return;
+
+            //frmNewVisit newVisit = new frmNewVisit(false, this);
+            //newVisit.ShowDialog();
+            //newVisit.Dispose();
+        }
+
+        void EditVisit()
+        {
+            //if (dgvVisits.SelectedRows.Count > 0)
+            //{
+            //    frmNewVisit newVisite = new frmNewVisit(true, this);
+            //    newVisite.ShowDialog();
+            //    newVisite.Dispose();
+            //}
+        }
+
+        void DeleteVisit()
+        {
+            if (dgvVisits.SelectedRows.Count > 0)
+            {
+                DialogResult dr = MessageBox.Show("Удалить посещение?", "Внимание!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dr == DialogResult.Yes)
+                {
+                    currDgvPosition = ((BindingSource)dgvVisits.DataSource).Position;
+                    UInt32 currIdVisit = Convert.ToUInt32(dgvVisits[dgvVisits.Columns["id_visit"].Index, dgvVisits.CurrentRow.Index].Value.ToString());
+                    Program.dbStyle.DeleteVisit(currIdVisit);
+                    GetDataVisits();
+                    try
+                    {
+                        dgvVisits.Rows[((BindingSource)dgvVisits.DataSource).Position].Selected = true;
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+        }
+
+        private void ToolStripMenuItemAdd_Click(object sender, EventArgs e)
+        {
+            AddVisit();
+        }
+
+        private void ToolStripMenuItemEdit_Click(object sender, EventArgs e)
+        {
+            EditVisit();
+        }
+
+        private void ToolStripMenuItemDelete_Click(object sender, EventArgs e)
+        {
+            DeleteVisit();
+        }
+
+        private void dgvVisits_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+
     }
 }

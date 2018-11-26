@@ -270,12 +270,13 @@
             this.Controls.Add(this.txtBxMiddleName);
             this.Controls.Add(this.txtBxFirstName);
             this.Controls.Add(this.txtBxLastName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "NewClient";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Новый клиент";
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NewClient_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewClient_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NewClient_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

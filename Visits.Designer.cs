@@ -28,10 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvVisits = new System.Windows.Forms.DataGridView();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.contextMenuStripVisits = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripVisits = new System.Windows.Forms.ToolStrip();
             this.tlStrpBtnAddVisit = new System.Windows.Forms.ToolStripButton();
             this.tlStrpBtnEditVisit = new System.Windows.Forms.ToolStripButton();
             this.tlStrpBtnDeleteVisit = new System.Windows.Forms.ToolStripButton();
@@ -45,40 +50,74 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVisits)).BeginInit();
-            this.toolStrip1.SuspendLayout();
+            this.contextMenuStripVisits.SuspendLayout();
+            this.toolStripVisits.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvVisits
             // 
             this.dgvVisits.AllowUserToAddRows = false;
             this.dgvVisits.AllowUserToDeleteRows = false;
+            this.dgvVisits.AllowUserToResizeRows = false;
             this.dgvVisits.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvVisits.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvVisits.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvVisits.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVisits.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvVisits.Location = new System.Drawing.Point(0, 39);
+            this.dgvVisits.ContextMenuStrip = this.contextMenuStripVisits;
+            this.dgvVisits.Location = new System.Drawing.Point(40, 56);
             this.dgvVisits.MultiSelect = false;
             this.dgvVisits.Name = "dgvVisits";
             this.dgvVisits.ReadOnly = true;
             this.dgvVisits.RowHeadersVisible = false;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dgvVisits.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dgvVisits.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvVisits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVisits.Size = new System.Drawing.Size(1358, 680);
+            this.dgvVisits.Size = new System.Drawing.Size(616, 471);
             this.dgvVisits.TabIndex = 4;
+            this.dgvVisits.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVisits_CellDoubleClick);
+            this.dgvVisits.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVisits_CellContentClick);
             // 
-            // toolStrip1
+            // contextMenuStripVisits
             // 
-            this.toolStrip1.Font = new System.Drawing.Font("Tahoma", 8.32F);
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextMenuStripVisits.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemAdd,
+            this.ToolStripMenuItemEdit,
+            this.ToolStripMenuItemDelete});
+            this.contextMenuStripVisits.Name = "contextMenuStripVisits";
+            this.contextMenuStripVisits.Size = new System.Drawing.Size(125, 70);
+            // 
+            // ToolStripMenuItemAdd
+            // 
+            this.ToolStripMenuItemAdd.Name = "ToolStripMenuItemAdd";
+            this.ToolStripMenuItemAdd.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItemAdd.Text = "Добавить";
+            this.ToolStripMenuItemAdd.Click += new System.EventHandler(this.ToolStripMenuItemAdd_Click);
+            // 
+            // ToolStripMenuItemEdit
+            // 
+            this.ToolStripMenuItemEdit.Name = "ToolStripMenuItemEdit";
+            this.ToolStripMenuItemEdit.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItemEdit.Text = "Изменить";
+            this.ToolStripMenuItemEdit.Click += new System.EventHandler(this.ToolStripMenuItemEdit_Click);
+            // 
+            // ToolStripMenuItemDelete
+            // 
+            this.ToolStripMenuItemDelete.Name = "ToolStripMenuItemDelete";
+            this.ToolStripMenuItemDelete.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItemDelete.Text = "Удалить";
+            this.ToolStripMenuItemDelete.Click += new System.EventHandler(this.ToolStripMenuItemDelete_Click);
+            // 
+            // toolStripVisits
+            // 
+            this.toolStripVisits.Font = new System.Drawing.Font("Tahoma", 8.32F);
+            this.toolStripVisits.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.toolStripVisits.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tlStrpBtnAddVisit,
             this.tlStrpBtnEditVisit,
             this.tlStrpBtnDeleteVisit,
@@ -90,12 +129,12 @@
             this.toolStripSeparator2,
             this.toolStripButton6,
             this.toolStripSeparator4});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(1358, 39);
-            this.toolStrip1.TabIndex = 5;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStripVisits.Location = new System.Drawing.Point(0, 0);
+            this.toolStripVisits.Name = "toolStripVisits";
+            this.toolStripVisits.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStripVisits.Size = new System.Drawing.Size(1358, 39);
+            this.toolStripVisits.TabIndex = 5;
+            this.toolStripVisits.Text = "toolStrip1";
             // 
             // tlStrpBtnAddVisit
             // 
@@ -192,16 +231,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1358, 741);
-            this.Controls.Add(this.dgvVisits);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.toolStripVisits);
+            this.Controls.Add(this.dgvVisits);
             this.Name = "Visits";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Посещения клиента - Иванов Иван Иванович";
+            this.Text = "Посещения клиента";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.dgvVisits)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.contextMenuStripVisits.ResumeLayout(false);
+            this.toolStripVisits.ResumeLayout(false);
+            this.toolStripVisits.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -210,7 +250,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvVisits;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip toolStripVisits;
         private System.Windows.Forms.ToolStripButton tlStrpBtnAddVisit;
         private System.Windows.Forms.ToolStripButton tlStrpBtnEditVisit;
         private System.Windows.Forms.ToolStripButton tlStrpBtnDeleteVisit;
@@ -223,5 +263,9 @@
         private System.Windows.Forms.ToolStripButton toolStripButton6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripVisits;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemAdd;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemEdit;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemDelete;
     }
 }
