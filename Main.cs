@@ -842,6 +842,12 @@ namespace Style
             }
         }
 
+        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Программа является собственностью салона красоты \"Кристи\". Копирование и распространение запрещено!",
+                "О программе...", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1); 
+        }
+
 
     }
 

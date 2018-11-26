@@ -271,8 +271,10 @@ namespace Style
             int fullTotalCountStylesInYear = 0; //общее число услуг, выполненных за год (является суммой всех totalCountVisitsInYear)
             int[] countStylesInMonth = new int[countMonthIsYear]; //общее число услуг, выполненных за каждый месяц
 
-            DateTime _dt1 = new DateTime(dt.Year, dt.Month, 1);
-            DateTime _dt2 = new DateTime(dt.Year, dt.Month + 1, 1).AddSeconds(-1);
+            //DateTime _dt1 = new DateTime(dt.Year, dt.Month, 1);
+            //DateTime _dt2 = new DateTime(dt.Year, dt.Month + 1, 1).AddSeconds(-1);
+            DateTime _dt1 = new DateTime(dt.Year, 1, 1);
+            DateTime _dt2 = new DateTime(dt.Year+1, 1, 1).AddSeconds(-1);
 
             Program.dbStyle.GetCountVisitsInYear(_dt1, _dt2, id_employ, countMonthIsYear, out countVisitsInMonth, out totalCountVisitsInYear);
             Program.dbStyle.GetTotalListStylesInYear(_dt1, _dt2, id_employ, countMonthIsYear, ref infoStylesInMonth);
