@@ -446,7 +446,7 @@ namespace Style
         public string FirstName = "";
         public string LastName = "";
         public string MiddleName = "";
-        public DateTime BirthDay = new DateTime();
+        public DateTime? BirthDay ;
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -460,7 +460,8 @@ namespace Style
             FirstName = (string)GetCurrRowClientInDGV.Cells["FirstName"].Value;
             LastName = (string)GetCurrRowClientInDGV.Cells["LastName"].Value;
             MiddleName = (string)GetCurrRowClientInDGV.Cells["MiddleName"].Value;
-            BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
+            if (GetCurrRowClientInDGV.Cells["BirthDay"].Value != DBNull.Value)
+                BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
         }
 
         private void dgvVisits_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -473,6 +474,9 @@ namespace Style
                 LastName = (string)GetCurrRowClientInDGV.Cells["LastName"].Value;
                 MiddleName = (string)GetCurrRowClientInDGV.Cells["MiddleName"].Value;
                 BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
+               
+                if (GetCurrRowClientInDGV.Cells["BirthDay"].Value != DBNull.Value)
+                    BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
 
                 EditVisit();
             }
@@ -678,7 +682,9 @@ namespace Style
                             if (str1.Contains(str2))
                             {
                                 dgvClients.Rows[idx].Selected = true;
-                                dgvClients.FirstDisplayedScrollingRowIndex = selIndex + 1;
+                                //dgvClients.FirstDisplayedScrollingRowIndex = selIndex + 1;
+                                dgvClients.FirstDisplayedScrollingRowIndex = idx;
+                                
                                 GetDataVisits();
                                 return true;
                             }
@@ -720,7 +726,7 @@ namespace Style
                             if (str1.Contains(str2))
                             {
                                 dgvVisits.Rows[idx].Selected = true;
-                                dgvVisits.FirstDisplayedScrollingRowIndex = selIndex + 1;
+                                dgvVisits.FirstDisplayedScrollingRowIndex = idx;
                                 return true;
                             }
                         }

@@ -202,7 +202,6 @@
             this.btnSave.TabIndex = 20;
             this.btnSave.Text = "Сохранить";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnClose
             // 
@@ -218,8 +217,11 @@
             // 
             // dateTPBirthday
             // 
+            this.dateTPBirthday.Checked = false;
+            this.dateTPBirthday.CustomFormat = "";
             this.dateTPBirthday.Location = new System.Drawing.Point(115, 120);
             this.dateTPBirthday.Name = "dateTPBirthday";
+            this.dateTPBirthday.ShowCheckBox = true;
             this.dateTPBirthday.Size = new System.Drawing.Size(152, 20);
             this.dateTPBirthday.TabIndex = 22;
             // 

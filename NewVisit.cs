@@ -244,7 +244,7 @@ namespace Style
         public string FirstName = "";
         public string LastName = "";
         public string MiddleName = "";
-        public DateTime BirthDay = new DateTime();
+        public DateTime? BirthDay ;
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -433,11 +433,11 @@ namespace Style
                 DialogResult dr = MessageBox.Show("Колонка 'Ед. изм.' в списке расходных материалов не может быть больше 50 символов", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return false;
             }
-            else if (!isValidMaterialsEDZIM())
-            {
-                DialogResult dr = MessageBox.Show("Колонка 'Ед. изм.' в списке расходных материалов не может быть пустой", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return false;
-            }
+            //else if (!isValidMaterialsEDZIM())
+            //{
+            //    DialogResult dr = MessageBox.Show("Колонка 'Ед. изм.' в списке расходных материалов не может быть пустой", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            //    return false;
+            //}
             else if (!isValidConsultsCost())
             {
                 DialogResult dr = MessageBox.Show("Колонка 'Стоимость' в списке консультаций содержит неверные данные", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Stop);

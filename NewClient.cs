@@ -83,10 +83,11 @@ namespace Style
             maskTxtBxTelMobile.Text = _row.Cells["TelMobile"].Value.ToString();
             maskTxtBxTelHome.Text = _row.Cells["TelHome"].Value.ToString();
 
-            if (_row.Cells["Birthday"].Value != System.DBNull.Value)
+            if (_row.Cells["Birthday"].Value != DBNull.Value)
+            {
+                dateTPBirthday.Checked = true;
                 dateTPBirthday.Value = (DateTime)_row.Cells["Birthday"].Value;
-            else
-                dateTPBirthday.Value = new DateTime(1900, 01, 01);
+            }
 
         }
 
@@ -153,11 +154,7 @@ namespace Style
             return true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
 
-           
-        }
 
         private void NewClient_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -166,6 +163,10 @@ namespace Style
 
         bool editClient()
         {
+            DateTime? dt1 = null;
+            if (dateTPBirthday.Checked)
+                dt1 = dateTPBirthday.Value.Date;
+
             uint discount = 0;
             try
             {
@@ -181,14 +182,14 @@ namespace Style
 
             log.Info("id_client = " + id_client + " LastName = " + txtBxLastName.Text.Trim(' ') + " FirstName = " + txtBxFirstName.Text.Trim(' ') +
                 " MiddleName = " + txtBxMiddleName.Text.Trim(' ') + " TelMobile = " + maskTxtBxTelMobile.Text.Trim(' ') + " TelHome = " + maskTxtBxTelHome.Text.Trim(' ') +
-                " Address = " + txtBxAddress.Text.Trim(' ') + " Birthday = " + dateTPBirthday.Value.Date + " discount = " + discount + " Notes = " + txtBxNotes.Text.Trim(' ')
+                " Address = " + txtBxAddress.Text.Trim(' ') + " Birthday = " + dt1 + " discount = " + discount + " Notes = " + txtBxNotes.Text.Trim(' ')
                 );
 
             return Program.dbStyle.UpdateClient(id_client,
                   txtBxLastName.Text.Trim(' '), txtBxFirstName.Text.Trim(' '), txtBxMiddleName.Text.Trim(' '),
                   maskTxtBxTelMobile.Text.Trim(' '), maskTxtBxTelHome.Text.Trim(' '),
                   txtBxAddress.Text.Trim(' '),
-                  dateTPBirthday.Value.Date,
+                  dt1,
                   discount,
                   txtBxNotes.Text.Trim(' ')
                   );
@@ -197,6 +198,10 @@ namespace Style
 
         void addClient()
         {
+            DateTime? dt1 = null;
+            if (dateTPBirthday.Checked)
+                dt1 = dateTPBirthday.Value.Date;
+
             uint discount = 0;
             try
             {
@@ -212,13 +217,13 @@ namespace Style
 
             log.Info("id_client = " + id_client + " LastName = " + txtBxLastName.Text.Trim(' ') + " FirstName = " + txtBxFirstName.Text.Trim(' ')+
                 " MiddleName = " + txtBxMiddleName.Text.Trim(' ') + " TelMobile = " + maskTxtBxTelMobile.Text.Trim(' ') + " TelHome = " + maskTxtBxTelHome.Text.Trim(' ') +
-                " Address = " + txtBxAddress.Text.Trim(' ') + " Birthday = " + dateTPBirthday.Value.Date + " discount = " + discount + " Notes = " + txtBxNotes.Text.Trim(' ')
+                " Address = " + txtBxAddress.Text.Trim(' ') + " Birthday = " + dt1 + " discount = " + discount + " Notes = " + txtBxNotes.Text.Trim(' ')
                 );
 
             Program.dbStyle.InsertClient(txtBxLastName.Text.Trim(' '), txtBxFirstName.Text.Trim(' '), txtBxMiddleName.Text.Trim(' '),
                 maskTxtBxTelMobile.Text.Trim(' '), maskTxtBxTelHome.Text.Trim(' '),
                 txtBxAddress.Text.Trim(' '),
-                dateTPBirthday.Value.Date,
+                dt1,
                 discount,
                 txtBxNotes.Text.Trim(' ')
                 );

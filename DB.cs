@@ -93,7 +93,7 @@ namespace Style
 
         public bool UpdateClient(UInt32 idClient, string LastName, string FirstName, string MiddleName,
             string telMobile, string telHome,
-            string address, DateTime birthDay, uint discountConst, string notes)
+            string address, DateTime? birthDay, uint discountConst, string notes)
         {
             if (conn.State != System.Data.ConnectionState.Open)
             {
@@ -125,7 +125,10 @@ namespace Style
                 command.Parameters.Add("@telMobile", OleDbType.VarChar).Value = telMobile;
                 command.Parameters.Add("@telHome", OleDbType.VarChar).Value = telHome;
                 command.Parameters.Add("@address", OleDbType.VarChar).Value = address;
-                command.Parameters.Add("@birthDay", OleDbType.Date).Value = birthDay.Date;
+                if (birthDay != null)
+                    command.Parameters.Add("@birthDay", OleDbType.Date).Value = birthDay.Value.Date;
+                else
+                    command.Parameters.Add("@birthDay", OleDbType.Integer).Value = DBNull.Value;
                 command.Parameters.Add("@discountConst", OleDbType.Integer).Value = discountConst;
                 command.Parameters.Add("@notes", OleDbType.VarChar).Value = notes;
                 command.Parameters.Add("@id_client", OleDbType.Integer).Value = idClient;
@@ -148,7 +151,7 @@ namespace Style
         
         public bool InsertClient(string LastName, string FirstName, string MiddleName, 
             string telMobile, string telHome, 
-            string address, DateTime birthDay, uint discountConst, string notes)
+            string address, DateTime? birthDay, uint discountConst, string notes)
         {
             if (conn.State != System.Data.ConnectionState.Open)
             {
@@ -189,7 +192,11 @@ namespace Style
                 command.Parameters.Add("@telMobile", OleDbType.VarChar).Value = telMobile;
                 command.Parameters.Add("@telHome", OleDbType.VarChar).Value = telHome;
                 command.Parameters.Add("@address", OleDbType.VarChar).Value = address;
-                command.Parameters.Add("@birthDay", OleDbType.Date).Value = birthDay.Date;
+                if (birthDay != null)
+                    command.Parameters.Add("@birthDay", OleDbType.Date).Value = birthDay.Value.Date;
+                else
+                    command.Parameters.Add("@birthDay",OleDbType.Integer).Value = DBNull.Value;
+
                 command.Parameters.Add("@discountConst", OleDbType.Integer).Value = discountConst;
                 command.Parameters.Add("@notes", OleDbType.VarChar).Value = notes;
 

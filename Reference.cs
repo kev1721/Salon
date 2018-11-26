@@ -58,6 +58,12 @@ namespace Style
             if (refs == References.UsersPrg) 
                 addCmbBxToDGV(dataGridView1, "id_access", "Уровень доступа", "id", "NameAccess", "AccessLevel");
 
+            setOrderDGV();
+
+            if ((refs == References.Styles || refs == References.Materials) && _isSelectMode)
+            {
+                dataGridView1.MultiSelect = true;
+            }
         }
 
         bool isSelectMode = false;
@@ -101,6 +107,33 @@ namespace Style
                     if (dataGridView1.Columns[colName] != null)
                         dataGridView1.Columns[colName].Visible = false;
                 }
+        }
+
+        void setOrderDGV()
+        {
+            switch (refs)
+            {
+                case References.Materials:
+                    dataGridView1.Sort(dataGridView1.Columns["name_m"], ListSortDirection.Ascending);
+                    break;
+                case References.Styles:
+                    dataGridView1.Sort(dataGridView1.Columns["name_style"], ListSortDirection.Ascending);
+                    break;
+                case References.Employes:
+                    dataGridView1.Sort(dataGridView1.Columns["FIO"], ListSortDirection.Ascending);
+                    break;
+                case References.ClientsWidthBirthday:
+                    dataGridView1.Sort(dataGridView1.Columns["LastName"], ListSortDirection.Ascending);
+                    break;
+                case References.UsersPrg:
+                    dataGridView1.Sort(dataGridView1.Columns["UserName"], ListSortDirection.Ascending);
+                    break;
+                case References.AccessLevel:
+                    dataGridView1.Sort(dataGridView1.Columns["NameAccess"], ListSortDirection.Ascending);
+                    break;
+                default:
+                    break;
+            }
         }
 
         void setNameColumnsDGV()
