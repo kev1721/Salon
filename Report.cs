@@ -306,8 +306,8 @@ namespace Style
                 report.SetParameterValue("Employ", fio_employ);
                 report.SetParameterValue("dt", dt);
 
-                report.Design();
-                //report.Show();
+                //report.Design();
+                report.Show();
             }
         }
 

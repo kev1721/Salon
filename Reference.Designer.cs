@@ -79,7 +79,7 @@
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(643, 25);
+            this.bindingNavigator1.Size = new System.Drawing.Size(792, 25);
             this.bindingNavigator1.TabIndex = 36;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -182,7 +182,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(0, 0);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(643, 83);
+            this.panel6.Size = new System.Drawing.Size(792, 83);
             this.panel6.TabIndex = 37;
             // 
             // label7
@@ -193,7 +193,7 @@
             this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label7.Location = new System.Drawing.Point(12, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(619, 79);
+            this.label7.Size = new System.Drawing.Size(768, 79);
             this.label7.TabIndex = 0;
             this.label7.Text = "НаименованиеСправочника";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -203,16 +203,16 @@
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Controls.Add(this.btnSaveData);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 454);
+            this.panel1.Location = new System.Drawing.Point(0, 538);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(643, 35);
+            this.panel1.Size = new System.Drawing.Size(792, 35);
             this.panel1.TabIndex = 38;
             // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(561, 6);
+            this.btnClose.Location = new System.Drawing.Point(710, 6);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 3;
@@ -223,7 +223,7 @@
             // btnSaveData
             // 
             this.btnSaveData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveData.Location = new System.Drawing.Point(480, 6);
+            this.btnSaveData.Location = new System.Drawing.Point(629, 6);
             this.btnSaveData.Name = "btnSaveData";
             this.btnSaveData.Size = new System.Drawing.Size(75, 23);
             this.btnSaveData.TabIndex = 2;
@@ -239,7 +239,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 108);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(643, 346);
+            this.dataGridView1.Size = new System.Drawing.Size(792, 430);
             this.dataGridView1.TabIndex = 39;
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
@@ -250,7 +250,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(643, 489);
+            this.ClientSize = new System.Drawing.Size(792, 573);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.bindingNavigator1);

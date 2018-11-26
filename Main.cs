@@ -161,8 +161,12 @@ namespace Style
         
         public void GetDataClients()
         {
+            bool fl = false;
             if (dgvClients.SelectedRows.Count > 0)
+            {
                 currDgvPositionClients = dgvClients.SelectedRows[0].Index;
+                fl = true;
+            }
 
             toolStripStatusLabel3.Text = "";
             DataSet data = new DataSet();
@@ -180,6 +184,10 @@ namespace Style
 
             OrderByClients(nameColumnOrderClients, sortColumnOrderClients);
 
+            if (fl)
+            {
+                searchClients(currDgvPositionClients-1);
+            }
         }
 
         void setLabelBirthDays(DataSet _birthdayClient)
@@ -277,6 +285,20 @@ namespace Style
                         {
                             dgvClients.Rows[i].Selected = true;
                             dgvClients.FirstDisplayedScrollingRowIndex = i;
+
+                            int id_clientNew = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+                            GetDataVisits();
+                            if (id_client != id_clientNew && dgvVisits.RowCount > 0)
+                                dgvVisits.Rows[0].Selected = true;
+
+                            id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+                            discountConst = (int)GetCurrRowClientInDGV.Cells["DiscountConst"].Value;
+                            FirstName = (string)GetCurrRowClientInDGV.Cells["FirstName"].Value;
+                            LastName = (string)GetCurrRowClientInDGV.Cells["LastName"].Value;
+                            MiddleName = (string)GetCurrRowClientInDGV.Cells["MiddleName"].Value;
+                            if (GetCurrRowClientInDGV.Cells["BirthDay"].Value != DBNull.Value)
+                                BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
+
                         }
                     }
             }
@@ -708,7 +730,19 @@ namespace Style
                                 //dgvClients.FirstDisplayedScrollingRowIndex = selIndex + 1;
                                 dgvClients.FirstDisplayedScrollingRowIndex = idx;
                                 
+                                int id_clientNew = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
                                 GetDataVisits();
+                                if (id_client != id_clientNew && dgvVisits.RowCount > 0)
+                                    dgvVisits.Rows[0].Selected = true;
+
+                                id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+                                discountConst = (int)GetCurrRowClientInDGV.Cells["DiscountConst"].Value;
+                                FirstName = (string)GetCurrRowClientInDGV.Cells["FirstName"].Value;
+                                LastName = (string)GetCurrRowClientInDGV.Cells["LastName"].Value;
+                                MiddleName = (string)GetCurrRowClientInDGV.Cells["MiddleName"].Value;
+                                if (GetCurrRowClientInDGV.Cells["BirthDay"].Value != DBNull.Value)
+                                    BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
+
                                 return true;
                             }
                         }

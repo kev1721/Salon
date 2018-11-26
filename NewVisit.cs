@@ -80,6 +80,15 @@ namespace Style
                 }
             }
 
+            dgvStyles.Columns[2].Width = 350;
+            dgvStyles.Columns[3].Width = 125;
+
+            dgvMaterials.Columns[2].Width = 350;
+            dgvMaterials.Columns[3].Width = 125;
+            dgvMaterials.Columns[4].Width = 125;
+
+            dgvConsults.Columns[1].Width = 350;
+            dgvConsults.Columns[2].Width = 150;
             //chBxAccept.CheckedChanged += new System.EventHandler(this.chBxAccept_CheckedChanged);
 
         }
@@ -198,6 +207,7 @@ namespace Style
 
             dgvStyles.Columns.Add("name_st", "Услуга");
             dgvStyles.Columns[2].ReadOnly = true;
+
             
             //dgvStyles.Columns.Add("id_employ", "Исполнитель");
             //dgvStyles.Columns[2].Visible = false;
@@ -215,6 +225,8 @@ namespace Style
             {
                 item.DataPropertyName = item.Name;
             }
+
+
         }
 
         void mv_ListChanged(object sender, ListChangedEventArgs e)
