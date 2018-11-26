@@ -1272,13 +1272,27 @@ namespace Style
 
         public void GetCountVisitsInMonth(DateTime dt1, DateTime dt2, UInt32 id_employ, int countsDayInMonth, out int[] countVisits, out int totalCountVisits)
         {
-            string selectSQL = "SELECT Vis.DateVisit, count(Vis.id) AS cntVis " +
+            //string selectSQL = "SELECT Vis.DateVisit, count(Vis.id) AS cntVis " +
+            //    " FROM StylesVisit AS SVis, Visits AS Vis, Employ AS Emp " +
+            //    " WHERE Emp.id = SVis.id_employ " +
+            //    " AND SVis.id_visit = Vis.id " +
+            //    " AND Vis.DateVisit >= @dt1 AND Vis.DateVisit <= @dt2 " +
+            //    " AND Emp.id = @id_employ " +
+            //    " GROUP BY Vis.DateVisit ";
+
+            string selectSQL = "SELECT vis1.datevisit as DateVis, count(Vis1.id) as cntVis " +
+                " FROM   Visits AS Vis1, " +
+                " (SELECT  distinct( Vis.id) " +
                 " FROM StylesVisit AS SVis, Visits AS Vis, Employ AS Emp " +
                 " WHERE Emp.id = SVis.id_employ " +
                 " AND SVis.id_visit = Vis.id " +
                 " AND Vis.DateVisit >= @dt1 AND Vis.DateVisit <= @dt2 " +
                 " AND Emp.id = @id_employ " +
-                " GROUP BY Vis.DateVisit ";
+                " )  AS [buffer] " +
+                " WHERE Vis1.id = Vis.id " +
+                " and Vis1.accept = true " +
+                " group by vis1.datevisit ";
+
 
             try
             {
@@ -1302,7 +1316,7 @@ namespace Style
                 {
                     while (dr.Read())
                     {
-                        DateTime _dt = (DateTime)dr["DateVisit"];
+                        DateTime _dt = (DateTime)dr["DateVis"];
                         Int32 _cntVis = Convert.ToInt32((Int32)dr["cntVis"]);
 
                         countVisits[_dt.Day - 1] = _cntVis;
@@ -1320,7 +1334,8 @@ namespace Style
                 " AND ((Vis.DateVisit)>= @dt1)  AND ((Vis.DateVisit)<= @dt2) " +
                 " AND (Emp.id)=@id_employ) " +
                 " AND ((SVis.id_visit)=[Vis].[id]) " +
-                " AND ((St.id)=[SVis].[id_style])) " +
+                " AND ((St.id)=[SVis].[id_style]) " +
+                " AND ((Vis.accept) = true)) " +
                 " Group by  SVis.id_style, St.name_style ";
             
             try
@@ -1367,6 +1382,7 @@ namespace Style
                  " AND ((SVis.id_visit)=[Vis].[id]) " +
                  " AND ((St.id)=SVis.id_style)) " +
                  " AND St.id = @id_style " +
+                 " AND Vis.accept = true " +
                  " Group by  Vis.DateVisit ";
 
             try
@@ -1401,6 +1417,150 @@ namespace Style
             return abc;
         }
 
+
+        public void GetCountVisitsInYear(DateTime dt1, DateTime dt2, UInt32 id_employ, int countsMonthInYear, out int[] countVisits, out int totalCountVisits)
+        {
+            //string selectSQL = "SELECT Vis.DateVisit, count(Vis.id) AS cntVis " +
+            //    " FROM StylesVisit AS SVis, Visits AS Vis, Employ AS Emp " +
+            //    " WHERE Emp.id = SVis.id_employ " +
+            //    " AND SVis.id_visit = Vis.id " +
+            //    " AND Vis.DateVisit >= @dt1 AND Vis.DateVisit <= @dt2 " +
+            //    " AND Emp.id = @id_employ " +
+            //    " GROUP BY Vis.DateVisit ";
+
+            string selectSQL = "SELECT vis1.datevisit as DateVis, count(Vis1.id) as cntVis " +
+                " FROM   Visits AS Vis1, " +
+                " (SELECT  distinct( Vis.id) " +
+                " FROM StylesVisit AS SVis, Visits AS Vis, Employ AS Emp " +
+                " WHERE Emp.id = SVis.id_employ " +
+                " AND SVis.id_visit = Vis.id " +
+                " AND Vis.DateVisit >= @dt1 AND Vis.DateVisit <= @dt2 " +
+                " AND Emp.id = @id_employ " +
+                " )  AS [buffer] " +
+                " WHERE Vis1.id = Vis.id " +
+                " and Vis1.accept = true " +
+                " group by vis1.datevisit ";
+
+
+            try
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+            }
+            catch (Exception)
+            {
+            }
+
+            countVisits = new int[countsMonthInYear];
+            totalCountVisits = 0;
+
+            using (OleDbCommand commd = new OleDbCommand(selectSQL, conn))
+            {
+                commd.Parameters.Add("@dt1", OleDbType.Date).Value = dt1;
+                commd.Parameters.Add("@dt2", OleDbType.Date).Value = dt2;
+                commd.Parameters.Add("@id_employ", OleDbType.Integer).Value = id_employ;
+
+                using (OleDbDataReader dr = commd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        DateTime _dt = (DateTime)dr["DateVis"];
+                        Int32 _cntVis = Convert.ToInt32((Int32)dr["cntVis"]);
+
+                        countVisits[_dt.Month - 1] = countVisits[_dt.Month - 1] + _cntVis;
+                        totalCountVisits += _cntVis;
+                    }
+                }
+            }
+        }
+
+        public void GetTotalListStylesInYear(DateTime dt1, DateTime dt2, UInt32 id_employ, int countsMonthInYear, ref List<styleInfoMonth> listStyles)
+        {
+            string selectSQL = " SELECT  SVis.id_style, St.name_style, count(SVis.id_style) as CntStyles " +
+                " FROM StylesVisit AS SVis, Visits AS Vis, Employ AS Emp, Styles AS St " +
+                " WHERE (((Emp.id)=[SVis].[id_employ] " +
+                " AND ((Vis.DateVisit)>= @dt1)  AND ((Vis.DateVisit)<= @dt2) " +
+                " AND (Emp.id)=@id_employ) " +
+                " AND ((SVis.id_visit)=[Vis].[id]) " +
+                " AND ((St.id)=[SVis].[id_style]) " +
+                " AND ((Vis.accept) = true)) " +
+                " Group by  SVis.id_style, St.name_style ";
+
+            try
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+            }
+            catch (Exception)
+            {
+            }
+
+            using (OleDbCommand commd = new OleDbCommand(selectSQL, conn))
+            {
+                commd.Parameters.Add("@dt1", OleDbType.Date).Value = dt1;
+                commd.Parameters.Add("@dt2", OleDbType.Date).Value = dt2;
+                commd.Parameters.Add("@id_employ", OleDbType.Integer).Value = id_employ;
+
+                using (OleDbDataReader dr = commd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        styleInfoMonth st = new styleInfoMonth();
+                        st.sv = new StyleVisit();
+                        st.sv.Id_style = (Int32)dr["id_style"];
+                        st.sv.Name_st = (string)dr["name_style"];
+                        st.totalCountStyleInYear = (Int32)dr["cntStyles"];
+                        st.countStyleInMonth = new int[countsMonthInYear];
+                        listStyles.Add(st);
+                    }
+                }
+            }
+        }
+
+        public int[] GetInfoStylesInYear(DateTime dt1, DateTime dt2, UInt32 id_employ, int id_style, int countMonthInYear)
+        {
+            string selectSQL = " SELECT  Vis.DateVisit,  count(SVis.id_style) as CntStyles " +
+                 " FROM StylesVisit AS SVis, Visits AS Vis, Employ AS Emp, Styles AS St " +
+                 " WHERE (((Emp.id)=[SVis].[id_employ] " +
+                 " AND ((Vis.DateVisit)>=@dt1)  AND ((Vis.DateVisit)<=@dt2) " +
+                 " AND (Emp.id)=@id_employ) " +
+                 " AND ((SVis.id_visit)=[Vis].[id]) " +
+                 " AND ((St.id)=SVis.id_style)) " +
+                 " AND St.id = @id_style " +
+                 " AND Vis.accept = true " +
+                 " Group by  Vis.DateVisit ";
+
+            try
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+            }
+            catch (Exception)
+            {
+            }
+
+            int[] abc = new int[countMonthInYear];
+
+            using (OleDbCommand commd = new OleDbCommand(selectSQL, conn))
+            {
+                commd.Parameters.Add("@dt1", OleDbType.Date).Value = dt1;
+                commd.Parameters.Add("@dt2", OleDbType.Date).Value = dt2;
+                commd.Parameters.Add("@id_employ", OleDbType.Integer).Value = id_employ;
+                commd.Parameters.Add("@id_style", OleDbType.Integer).Value = id_style;
+
+                using (OleDbDataReader dr = commd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        DateTime _dt = (DateTime)dr["DateVisit"];
+                        Int32 _cntSt = (Int32)dr["CntStyles"];
+
+                        abc[_dt.Month - 1] = abc[_dt.Month - 1] + _cntSt;
+                    }
+                }
+            }
+            return abc;
+        }
     }
 
     public class CmbBxType

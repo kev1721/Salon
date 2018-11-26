@@ -23,13 +23,6 @@ namespace Style
             InitializeComponent();
         }
 
-        private void печатьToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (FormSetupReport frm = new FormSetupReport())
-            {
-                frm.ShowDialog();
-            }
-        }
         
         /// <summary>
         /// получить текущую выбранную строку гриды "ПРочиеДокументы"
@@ -656,7 +649,18 @@ namespace Style
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             if (dgvClients.SelectedRows.Count < 1) return;
-            for (int idx = dgvClients.SelectedRows[0].Index + 1; idx < dgvClients.Rows.Count; idx++)
+
+            if (searchClients(dgvClients.SelectedRows[0].Index))
+                return;
+
+            if (dgvClients.SelectedRows[0].Index > 0)
+                searchClients(-1);
+
+        }
+
+        bool searchClients(int selIndex)
+        {
+            for (int idx = selIndex + 1; idx < dgvClients.Rows.Count; idx++)
             {
                 for (int column = 0; column < dgvClients.Columns.Count; column++)
                 {
@@ -674,20 +678,32 @@ namespace Style
                             if (str1.Contains(str2))
                             {
                                 dgvClients.Rows[idx].Selected = true;
-                                dgvClients.FirstDisplayedScrollingRowIndex = dgvClients.SelectedRows[0].Index;
+                                dgvClients.FirstDisplayedScrollingRowIndex = selIndex + 1;
                                 GetDataVisits();
-                                return;
+                                return true;
                             }
                         }
                     }
                 }
             }
+            return false;
         }
 
         private void toolStripButton8_Click(object sender, EventArgs e)
         {
             if (dgvVisits.SelectedRows.Count < 1) return;
-            for (int idx = dgvVisits.SelectedRows[0].Index + 1; idx < dgvVisits.Rows.Count; idx++)
+
+
+            if (searchVisits(dgvVisits.SelectedRows[0].Index))
+                return;
+
+            if (dgvVisits.SelectedRows[0].Index > 0)
+                searchVisits(-1);
+        }
+
+        bool searchVisits(int selIndex)
+        {
+            for (int idx = selIndex + 1; idx < dgvVisits.Rows.Count; idx++)
             {
                 for (int column = 0; column < dgvVisits.Columns.Count; column++)
                 {
@@ -704,13 +720,14 @@ namespace Style
                             if (str1.Contains(str2))
                             {
                                 dgvVisits.Rows[idx].Selected = true;
-                                dgvVisits.FirstDisplayedScrollingRowIndex = dgvVisits.SelectedRows[0].Index;
-                                return;
+                                dgvVisits.FirstDisplayedScrollingRowIndex = selIndex + 1;
+                                return true;
                             }
                         }
                     }
                 }
             }
+            return false;
         }
 
         private void ToolStripMenuItemAdmining_Click(object sender, EventArgs e)
@@ -806,7 +823,22 @@ namespace Style
                     ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightPink;
                 else
                     ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+            }
+        }
 
+        private void ReportMonthToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (FormSetupReport frm = new FormSetupReport(TypeReport.Month))
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void ReportYearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (FormSetupReport frm = new FormSetupReport(TypeReport.Year))
+            {
+                frm.ShowDialog();
             }
         }
 

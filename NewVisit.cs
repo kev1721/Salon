@@ -69,12 +69,15 @@ namespace Style
 
             visitForm = _mainForm;
 
-            if (!Program.isAdminMode && chBxAccept.Checked)
+            if (!Program.isAdminMode )
             {
                 dTPDateVisit.Enabled = false;
-                chBxAccept.Enabled = false;
-                btnSave.Enabled = false;
-                btnCalculate.Enabled = false;
+                if (chBxAccept.Checked)
+                {
+                    chBxAccept.Enabled = false;
+                    btnSave.Enabled = false;
+                    btnCalculate.Enabled = false;
+                }
             }
 
             //chBxAccept.CheckedChanged += new System.EventHandler(this.chBxAccept_CheckedChanged);

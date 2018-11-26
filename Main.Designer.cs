@@ -49,6 +49,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemReport = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReportMonthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReportYearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemEmploye = new System.Windows.Forms.ToolStripMenuItem();
@@ -253,15 +255,31 @@
             // 
             // ToolStripMenuItemReport
             // 
+            this.ToolStripMenuItemReport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ReportMonthToolStripMenuItem,
+            this.ReportYearToolStripMenuItem});
             this.ToolStripMenuItemReport.Name = "ToolStripMenuItemReport";
-            this.ToolStripMenuItemReport.Size = new System.Drawing.Size(114, 22);
-            this.ToolStripMenuItemReport.Text = "Отчеты";
-            this.ToolStripMenuItemReport.Click += new System.EventHandler(this.печатьToolStripMenuItem_Click);
+            this.ToolStripMenuItemReport.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemReport.Text = "Отчеты...";
+            // 
+            // ReportMonthToolStripMenuItem
+            // 
+            this.ReportMonthToolStripMenuItem.Name = "ReportMonthToolStripMenuItem";
+            this.ReportMonthToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ReportMonthToolStripMenuItem.Text = "за месяц";
+            this.ReportMonthToolStripMenuItem.Click += new System.EventHandler(this.ReportMonthToolStripMenuItem_Click);
+            // 
+            // ReportYearToolStripMenuItem
+            // 
+            this.ReportYearToolStripMenuItem.Name = "ReportYearToolStripMenuItem";
+            this.ReportYearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ReportYearToolStripMenuItem.Text = "за год";
+            this.ReportYearToolStripMenuItem.Click += new System.EventHandler(this.ReportYearToolStripMenuItem_Click);
             // 
             // ToolStripMenuItemExit
             // 
             this.ToolStripMenuItemExit.Name = "ToolStripMenuItemExit";
-            this.ToolStripMenuItemExit.Size = new System.Drawing.Size(114, 22);
+            this.ToolStripMenuItemExit.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemExit.Text = "Выход";
             this.ToolStripMenuItemExit.Click += new System.EventHandler(this.выхожToolStripMenuItem_Click);
             // 
@@ -680,6 +698,8 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemService;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemMaterials;
         private System.Windows.Forms.ToolStripMenuItem usersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ReportMonthToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ReportYearToolStripMenuItem;
     }
 }
 
