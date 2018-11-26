@@ -1,0 +1,235 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace Style
+{
+    public partial class NewClient : Form
+    {
+        bool isEditMode = false;
+        Main mainForm;
+
+        public NewClient()
+        {
+            InitializeComponent();
+        }
+
+        public NewClient(bool _isEditMode, Main _mainForm)
+        {
+            InitializeComponent();
+            
+            // TODO: Complete member initialization
+            isEditMode = _isEditMode;
+            if (_isEditMode)
+            {
+                this.Text = "Изменение данных клиента";
+                FillTxtBx(_mainForm.GetRowCurrRowInDGV); //заполнение полей
+                FillBufFields(); //заполнение буфера 
+            }
+            else
+            {
+                this.Text = "Добавление нового клиента";
+                this.btnSave.Text = "Добавить";
+                FillBufFields(); //заполнение буфера 
+
+                btnSave.DialogResult = DialogResult.OK;
+            }
+            mainForm = _mainForm;
+            
+        }
+
+        UInt32 id_client;
+        BufFields bufData;
+
+        struct BufFields
+        {
+            public string FirstName;
+            public string LastName;
+            public string MiddleName;
+            public string Address;
+            public string Notes;
+            public string DiscountConst;
+            public string TelMobile;
+            public string TelHome;
+            public DateTime Birthday;
+        }
+        /// <summary>
+        /// заполнить поля формы используя данные из выделенной строки в таблице основной формы
+        /// </summary>
+        /// <param name="_row"></param>
+        /// <returns>строка гриды</returns>
+        public void FillTxtBx(DataGridViewRow _row)
+        {
+            
+            id_client = Convert.ToUInt32(_row.Cells["id_client"].Value);
+            txtBxFirstName.Text = _row.Cells["FirstName"].Value.ToString();
+            txtBxLastName.Text = _row.Cells["LastName"].Value.ToString();
+            txtBxMiddleName.Text = _row.Cells["MiddleName"].Value.ToString();
+            txtBxAddress.Text = _row.Cells["Address"].Value.ToString();
+            txtBxNotes.Text = _row.Cells["Notes"].Value.ToString();
+            txtBxDiscountConst.Text = _row.Cells["DiscountConst"].Value.ToString();
+
+            maskTxtBxTelMobile.Text = _row.Cells["TelMobile"].Value.ToString();
+            maskTxtBxTelHome.Text = _row.Cells["TelHome"].Value.ToString();
+
+            if (_row.Cells["Birthday"].Value != System.DBNull.Value)
+                dateTPBirthday.Value = (DateTime)_row.Cells["Birthday"].Value;
+            else
+                dateTPBirthday.Value = new DateTime(1900, 01, 01);
+
+        }
+
+        public void FillBufFields()
+        {
+            bufData = new BufFields();
+
+            bufData.LastName = txtBxLastName.Text.Trim(' ');
+            bufData.FirstName = txtBxFirstName.Text.Trim(' ');
+            bufData.MiddleName = txtBxMiddleName.Text.Trim(' ');
+            bufData.Address = txtBxAddress.Text.Trim(' ');
+            bufData.Notes = txtBxNotes.Text.Trim(' ');
+            bufData.DiscountConst = txtBxDiscountConst.Text.Trim(' ');
+
+            bufData.TelMobile = maskTxtBxTelMobile.Text;
+            bufData.TelHome = maskTxtBxTelHome.Text;
+
+            bufData.Birthday = dateTPBirthday.Value;
+        }
+
+        public bool IsChangesData
+        {
+            get 
+            {
+                if (!bufData.LastName.Equals(txtBxLastName.Text.Trim(' ')) ||
+                    !bufData.FirstName.Equals(txtBxFirstName.Text.Trim(' ')) ||
+                    !bufData.MiddleName.Equals(txtBxMiddleName.Text.Trim(' ')) ||
+                    !bufData.Address.Equals(txtBxAddress.Text.Trim(' ')) ||
+                    !bufData.Notes.Equals(txtBxNotes.Text.Trim(' ')) ||
+                    !bufData.DiscountConst.Equals(txtBxDiscountConst.Text.Trim(' ')) ||
+
+                    !bufData.TelMobile.Equals(maskTxtBxTelMobile.Text.Trim(' ')) ||
+                    !bufData.TelHome.Equals(maskTxtBxTelHome.Text.Trim(' ')) ||
+
+                    !bufData.Birthday.Date.Equals(dateTPBirthday.Value.Date))
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //this.Close();
+            
+        }
+
+        bool isTrueClientData() //проверка данных клиента
+        {
+            bool _ret = false;
+
+            if (txtBxLastName.Text.Length == 0)
+            {
+                MessageBox.Show("Пустое поле 'Фамилия'!");
+                return false;
+            }
+
+            if (txtBxFirstName.Text.Length == 0)
+            {
+                MessageBox.Show("Пустое поле 'Имя'!");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!isEditMode) //если режим добавления
+            {
+                addClient();
+                FillBufFields();
+            }
+            else
+            {
+                if (editClient())
+                    FillBufFields();
+            }
+            mainForm.GetData();
+           
+        }
+
+        private void NewClient_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            mainForm.GetData();
+        }
+
+        bool editClient()
+        {
+            uint discount = 0;
+            try
+            {
+                discount = Convert.ToUInt16(txtBxDiscountConst.Text.Trim(' '));
+            }
+            catch (Exception)
+            {
+            }
+
+          return  Program.dbStyle.UpdateClient(id_client,
+                txtBxLastName.Text.Trim(' '), txtBxFirstName.Text.Trim(' '), txtBxMiddleName.Text.Trim(' '),
+                maskTxtBxTelMobile.Text.Trim(' '), maskTxtBxTelHome.Text.Trim(' '),
+                txtBxAddress.Text.Trim(' '),
+                dateTPBirthday.Value.Date,
+                discount,
+                txtBxNotes.Text.Trim(' ')
+                );
+        }
+
+
+        void addClient()
+        {
+            uint discount = 0;
+            try
+            {
+                discount = Convert.ToUInt16(txtBxDiscountConst.Text.Trim(' '));
+            }
+            catch (Exception)
+            {
+            }
+
+            Program.dbStyle.InsertClient(txtBxLastName.Text.Trim(' '), txtBxFirstName.Text.Trim(' '), txtBxMiddleName.Text.Trim(' '),
+                maskTxtBxTelMobile.Text.Trim(' '), maskTxtBxTelHome.Text.Trim(' '),
+                txtBxAddress.Text.Trim(' '),
+                dateTPBirthday.Value.Date,
+                discount,
+                txtBxNotes.Text.Trim(' ')
+                );
+        }
+
+        private void NewClient_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (IsChangesData)
+            {
+                if (isEditMode) //если режим изменения и данные изменены, то перед выходом спрашиваем
+                {
+                    DialogResult dr = MessageBox.Show("Данные клиента изменены. Закрыть окно без сохранения?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                    if (dr == System.Windows.Forms.DialogResult.No)
+                        e.Cancel = true;
+                }
+                else
+                {
+                    DialogResult dr = MessageBox.Show("Клиент не добавлен в базу данных. Закрыть окно без добавления?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                    if (dr == System.Windows.Forms.DialogResult.No)
+                        e.Cancel = true;
+                }
+            }
+
+
+
+        }
+    }
+}
