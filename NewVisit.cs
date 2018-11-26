@@ -135,7 +135,11 @@ namespace Style
             //            dgvCmbBx.MaxDropDownItems = 2;
             dgvCmbBx.FlatStyle = FlatStyle.Flat;
 
-            dgvCmbBx.DataSource = Program.dbStyle.GetDataReference("Select distinct " + valueMember + ", " + displayMember + " from [" + tableMember + "]", true);
+            if (tableMember.Equals("Employ") && !chBxAccept.Checked) 
+                dgvCmbBx.DataSource = Program.dbStyle.GetDataReference("Select distinct " + valueMember + ", " + displayMember + " from [" + tableMember + "] where isLeave = false", true);
+            else
+                dgvCmbBx.DataSource = Program.dbStyle.GetDataReference("Select distinct " + valueMember + ", " + displayMember + " from [" + tableMember + "]", true);
+
             dgvCmbBx.ValueMember = valueMember;
             dgvCmbBx.DisplayMember = displayMember;
 
@@ -504,9 +508,9 @@ namespace Style
                     Program.dbStyle.UpdateMaterialsVisit(id_visit, mv) &&
                     Program.dbStyle.UpdateStylesVisit(id_visit, styles) &&
                     Program.dbStyle.UpdateConsultsVisit(id_visit, consults);
-
         }
 
+        public int idNewVisit = 0;
         void addVisit()
         {
             uint discountSeason = 0;
@@ -531,6 +535,8 @@ namespace Style
             Int32 _id = Program.dbStyle.InsertVisit(id_client, dTPDateVisit.Value.Date, Program.currUserWorking,
             costStyle, "", costConsults, txtBxNote.Text.Trim(' '),
             discountSeason, costVisit, chBxAccept.Checked);
+
+            idNewVisit = _id;
             if (_id >= 0)
             {
                 log.Info("Attempt insert materials to visit...");

@@ -195,6 +195,7 @@ namespace Style
                   );
         }
 
+        public int idNewClient = 0;
 
         void addClient()
         {
@@ -225,7 +226,8 @@ namespace Style
                 txtBxAddress.Text.Trim(' '),
                 dt1,
                 discount,
-                txtBxNotes.Text.Trim(' ')
+                txtBxNotes.Text.Trim(' '),
+                out idNewClient
                 );
         }
 

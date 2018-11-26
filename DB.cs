@@ -151,8 +151,9 @@ namespace Style
         
         public bool InsertClient(string LastName, string FirstName, string MiddleName, 
             string telMobile, string telHome, 
-            string address, DateTime? birthDay, uint discountConst, string notes)
+            string address, DateTime? birthDay, uint discountConst, string notes, out int idNewclient)
         {
+            Int32 id = idNewclient = -1;
             if (conn.State != System.Data.ConnectionState.Open)
             {
                 try
@@ -161,7 +162,7 @@ namespace Style
                 }
                 catch { return false; }
             }
-            Int32 id = -1;
+
 
             string selectSQL = "SELECT top 1 * from [Clients] order by id_client desc";
 
@@ -203,6 +204,7 @@ namespace Style
                 try
                 {
                     command.ExecuteNonQuery();
+                    idNewclient = id;
                     log.Info("SQL. OK - insert client id = " + id);
                     return true;
                 }

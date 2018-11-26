@@ -267,7 +267,19 @@ namespace Style
 
             NewClient newClient = new NewClient(false, this); //если режим добавления, то передаем на форму значение false
             if (newClient.ShowDialog() == DialogResult.OK)
+            {
                 GetDataClients();
+                if (newClient.idNewClient > 0)
+                    for (int i = 0; i < dgvClients.Rows.Count; i++)
+                    {
+                        if (dgvClients.Rows[i].Cells["id_client"].Value != null &&
+                            (int)dgvClients.Rows[i].Cells["id_client"].Value == newClient.idNewClient)
+                        {
+                            dgvClients.Rows[i].Selected = true;
+                            dgvClients.FirstDisplayedScrollingRowIndex = i;
+                        }
+                    }
+            }
             newClient.Dispose();
         }
 
@@ -522,6 +534,17 @@ namespace Style
             {
                 GetDataVisits();
                 GetDataClients();
+
+                if (newVisit.idNewVisit > 0)
+                    for (int i = 0; i < dgvVisits.Rows.Count; i++)
+                    {
+                        if (dgvVisits.Rows[i].Cells["id"].Value != null &&
+                            (int)dgvVisits.Rows[i].Cells["id"].Value == newVisit.idNewVisit)
+                        {
+                            dgvVisits.Rows[i].Selected = true;
+                            dgvVisits.FirstDisplayedScrollingRowIndex = i;
+                        }
+                    }
             }
             newVisit.Dispose();
         }
@@ -852,6 +875,33 @@ namespace Style
         {
             MessageBox.Show("Программа является собственностью салона красоты \"Кристи\". Копирование и распространение запрещено!",
                 "О программе...", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1); 
+        }
+
+        private void tsTxtBxFind_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (dgvClients.SelectedRows.Count < 1) return;
+
+                if (searchClients(dgvClients.SelectedRows[0].Index))
+                    return;
+
+                if (dgvClients.SelectedRows[0].Index > 0)
+                    searchClients(-1);
+            }
+        }
+
+        private void tsTxtBxFindVisits_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (dgvVisits.SelectedRows.Count < 1) 
+                    return;
+                if (searchVisits(dgvVisits.SelectedRows[0].Index))
+                    return;
+                if (dgvVisits.SelectedRows[0].Index > 0)
+                    searchVisits(-1);
+            }
         }
 
 
