@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvClients = new System.Windows.Forms.DataGridView();
             this.contextMenuStripClients = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItemAddClient = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsStatLbl_CntClient = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelBallon = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelBirthDay = new System.Windows.Forms.ToolStripStatusLabel();
@@ -86,6 +86,8 @@
             this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.tsStatLb_DateTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsStatLb_NumClient = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvClients)).BeginInit();
             this.contextMenuStripClients.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -105,14 +107,14 @@
             this.dgvClients.AllowUserToOrderColumns = true;
             this.dgvClients.AllowUserToResizeRows = false;
             this.dgvClients.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvClients.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvClients.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvClients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvClients.ContextMenuStrip = this.contextMenuStripClients;
             this.dgvClients.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -121,10 +123,10 @@
             this.dgvClients.Name = "dgvClients";
             this.dgvClients.ReadOnly = true;
             this.dgvClients.RowHeadersVisible = false;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dgvClients.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dgvClients.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvClients.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvClients.Size = new System.Drawing.Size(614, 667);
+            this.dgvClients.Size = new System.Drawing.Size(700, 667);
             this.dgvClients.TabIndex = 0;
             this.dgvClients.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dgvClients.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
@@ -166,7 +168,9 @@
             // 
             this.statusStrip1.GripMargin = new System.Windows.Forms.Padding(1200, 2, 2, 2);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
+            this.tsStatLb_DateTime,
+            this.tsStatLbl_CntClient,
+            this.tsStatLb_NumClient,
             this.toolStripStatusLabel4,
             this.toolStripStatusLabelBallon,
             this.toolStripStatusLabelBirthDay,
@@ -178,14 +182,15 @@
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripStatusLabel1
+            // tsStatLbl_CntClient
             // 
-            this.toolStripStatusLabel1.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
-            this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripStatusLabel1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(137, 20);
-            this.toolStripStatusLabel1.Text = "XXXX.XX.XX XX:XX";
+            this.tsStatLbl_CntClient.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
+            this.tsStatLbl_CntClient.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsStatLbl_CntClient.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tsStatLbl_CntClient.Name = "tsStatLbl_CntClient";
+            this.tsStatLbl_CntClient.Size = new System.Drawing.Size(94, 20);
+            this.tsStatLbl_CntClient.Tag = "";
+            this.tsStatLbl_CntClient.Text = "Count_Client";
             // 
             // toolStripStatusLabel4
             // 
@@ -245,27 +250,27 @@
             this.ReportMonthToolStripMenuItem,
             this.ReportYearToolStripMenuItem});
             this.ToolStripMenuItemReport.Name = "ToolStripMenuItemReport";
-            this.ToolStripMenuItemReport.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItemReport.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemReport.Text = "Отчеты...";
             // 
             // ReportMonthToolStripMenuItem
             // 
             this.ReportMonthToolStripMenuItem.Name = "ReportMonthToolStripMenuItem";
-            this.ReportMonthToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.ReportMonthToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ReportMonthToolStripMenuItem.Text = "за месяц";
             this.ReportMonthToolStripMenuItem.Click += new System.EventHandler(this.ReportMonthToolStripMenuItem_Click);
             // 
             // ReportYearToolStripMenuItem
             // 
             this.ReportYearToolStripMenuItem.Name = "ReportYearToolStripMenuItem";
-            this.ReportYearToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.ReportYearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ReportYearToolStripMenuItem.Text = "за год";
             this.ReportYearToolStripMenuItem.Click += new System.EventHandler(this.ReportYearToolStripMenuItem_Click);
             // 
             // ToolStripMenuItemExit
             // 
             this.ToolStripMenuItemExit.Name = "ToolStripMenuItemExit";
-            this.ToolStripMenuItemExit.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItemExit.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemExit.Text = "Выход";
             this.ToolStripMenuItemExit.Click += new System.EventHandler(this.выхожToolStripMenuItem_Click);
             // 
@@ -332,7 +337,7 @@
             this.toolStripMain.Location = new System.Drawing.Point(0, 0);
             this.toolStripMain.Name = "toolStripMain";
             this.toolStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripMain.Size = new System.Drawing.Size(614, 25);
+            this.toolStripMain.Size = new System.Drawing.Size(700, 25);
             this.toolStripMain.TabIndex = 3;
             this.toolStripMain.Text = "toolStrip1";
             // 
@@ -400,6 +405,7 @@
             this.toolStripButton6.Name = "toolStripButton6";
             this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton6.Text = "Печать";
+            this.toolStripButton6.Visible = false;
             // 
             // toolStripSeparator4
             // 
@@ -431,14 +437,14 @@
             this.dgvVisits.AllowUserToOrderColumns = true;
             this.dgvVisits.AllowUserToResizeRows = false;
             this.dgvVisits.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvVisits.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvVisits.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvVisits.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVisits.ContextMenuStrip = this.contextMenuStripVisits;
             this.dgvVisits.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -447,10 +453,10 @@
             this.dgvVisits.Name = "dgvVisits";
             this.dgvVisits.ReadOnly = true;
             this.dgvVisits.RowHeadersVisible = false;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dgvVisits.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dgvVisits.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvVisits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVisits.Size = new System.Drawing.Size(744, 667);
+            this.dgvVisits.Size = new System.Drawing.Size(658, 667);
             this.dgvVisits.TabIndex = 5;
             this.dgvVisits.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVisits_CellDoubleClick);
             this.dgvVisits.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvVisits_RowPrePaint);
@@ -494,7 +500,7 @@
             this.panelClients.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelClients.Location = new System.Drawing.Point(0, 24);
             this.panelClients.Name = "panelClients";
-            this.panelClients.Size = new System.Drawing.Size(614, 692);
+            this.panelClients.Size = new System.Drawing.Size(700, 692);
             this.panelClients.TabIndex = 6;
             // 
             // panelVisits
@@ -502,9 +508,9 @@
             this.panelVisits.Controls.Add(this.dgvVisits);
             this.panelVisits.Controls.Add(this.toolStripVisits);
             this.panelVisits.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelVisits.Location = new System.Drawing.Point(614, 24);
+            this.panelVisits.Location = new System.Drawing.Point(700, 24);
             this.panelVisits.Name = "panelVisits";
-            this.panelVisits.Size = new System.Drawing.Size(744, 692);
+            this.panelVisits.Size = new System.Drawing.Size(658, 692);
             this.panelVisits.TabIndex = 7;
             // 
             // toolStripVisits
@@ -523,7 +529,7 @@
             this.toolStripVisits.Location = new System.Drawing.Point(0, 0);
             this.toolStripVisits.Name = "toolStripVisits";
             this.toolStripVisits.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripVisits.Size = new System.Drawing.Size(744, 25);
+            this.toolStripVisits.Size = new System.Drawing.Size(658, 25);
             this.toolStripVisits.TabIndex = 6;
             this.toolStripVisits.Text = "toolStrip1";
             // 
@@ -591,6 +597,7 @@
             this.toolStripButton10.Name = "toolStripButton10";
             this.toolStripButton10.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton10.Text = "Печать";
+            this.toolStripButton10.Visible = false;
             // 
             // toolStripSeparator9
             // 
@@ -602,6 +609,25 @@
             this.timer2.Enabled = true;
             this.timer2.Interval = 500;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // tsStatLb_DateTime
+            // 
+            this.tsStatLb_DateTime.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
+            this.tsStatLb_DateTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsStatLb_DateTime.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tsStatLb_DateTime.Name = "tsStatLb_DateTime";
+            this.tsStatLb_DateTime.Size = new System.Drawing.Size(137, 20);
+            this.tsStatLb_DateTime.Text = "XXXX.XX.XX XX:XX";
+            // 
+            // tsStatLb_NumClient
+            // 
+            this.tsStatLb_NumClient.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
+            this.tsStatLb_NumClient.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsStatLb_NumClient.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tsStatLb_NumClient.Name = "tsStatLb_NumClient";
+            this.tsStatLb_NumClient.Size = new System.Drawing.Size(83, 20);
+            this.tsStatLb_NumClient.Tag = "";
+            this.tsStatLb_NumClient.Text = "Num_Client";
             // 
             // Main
             // 
@@ -653,7 +679,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel tsStatLbl_CntClient;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripTextBox tsTxtBxFind;
@@ -695,6 +721,8 @@
         private System.Windows.Forms.ToolStripMenuItem ReportMonthToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ReportYearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel tsStatLb_DateTime;
+        private System.Windows.Forms.ToolStripStatusLabel tsStatLb_NumClient;
     }
 }
 

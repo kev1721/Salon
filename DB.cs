@@ -656,7 +656,10 @@ namespace Style
                     {
                         while (dr.Read())
                         {
-                            str.Add(new CmbBxType((Int32)dr["id"], (string)dr["FIO"] ));
+                            int id = (Int32)dr["id"];
+                            string fio = dr["FIO"] == DBNull.Value ? "" : (string)dr["FIO"];
+
+                            str.Add(new CmbBxType(id, fio));
                         }
                     }
                 }

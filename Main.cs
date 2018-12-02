@@ -179,8 +179,11 @@ namespace Style
         public void GetDataClients()
         {
             bool fl = false;
+            int iii = 0;
             if (dgvClients.SelectedRows.Count > 0)
             {
+                iii = dgvClients.FirstDisplayedScrollingRowIndex;
+
                 currDgvPositionClients = dgvClients.SelectedRows[0].Index;
                 fl = true;
             }
@@ -200,6 +203,9 @@ namespace Style
             clientsBindingSource.DataMember = "Clients";
 
             OrderByClients(nameColumnOrderClients, sortColumnOrderClients);
+            
+            dgvClients.FirstDisplayedScrollingRowIndex = iii;
+            tsStatLbl_CntClient.Text = dgvClients.RowCount.ToString("000000");
 
         }
 
@@ -219,13 +225,20 @@ namespace Style
 
         void setLabelBirthDays(DataSet _birthdayClient)
         {
+            int i = 0;
             toolStripStatusLabelBirthDay.Text = "";
             foreach (DataRow item in _birthdayClient.Tables[0].Rows)
             {
+                i++;
+                if (i>4)
+                {
+                    toolStripStatusLabelBirthDay.Text = toolStripStatusLabelBirthDay.Text + " . . .";
+                    break;
+                }
                 StringBuilder str = new StringBuilder();
                 str.Append(" " + item.Field<string>("LastName"));
-                str.Append(" " + item.Field<string>("FirstName"));
-                str.Append(" " + item.Field<string>("MiddleName"));
+                str.Append(" " + item.Field<string>("FirstName").Substring(0,1) + ".");
+                str.Append(" " + item.Field<string>("MiddleName").Substring(0, 1) + ".");
                 toolStripStatusLabelBirthDay.Text = toolStripStatusLabelBirthDay.Text + str.ToString() + ";";
             }
         }
@@ -262,7 +275,7 @@ namespace Style
                 dgvClients.Columns["TelHome"].Width = 50;
 
                 dgvClients.Columns["Birthday"].HeaderText = "Дата рождения";
-                //dataGridView1.Columns["MiddleName"].Width = 40;
+                dgvClients.Columns["Birthday"].Width = 60;
                 
                 dgvClients.Columns["DiscountConst"].HeaderText = "Скидка пост.";
                 dgvClients.Columns["DiscountConst"].Width = 60;
@@ -344,7 +357,6 @@ namespace Style
                 if (newClient.ShowDialog() == DialogResult.OK)
                 {
                     GetDataClients();
-                    scrollDgv(dgvClients);
                 }
                 newClient.Dispose();
             }
@@ -364,8 +376,7 @@ namespace Style
                     log.Info(" id_client = " + currIdClient);
                     
                     Program.dbStyle.DeleteClient(currIdClient);
-                    GetDataClients();
-                    scrollDgv(dgvClients);
+                    GetDataClients();                    
                     GetDataVisits();
                 }
             }
@@ -432,7 +443,7 @@ namespace Style
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            toolStripStatusLabel1.Text = DateTime.Now.ToString();
+            tsStatLb_DateTime.Text = DateTime.Now.ToString();
         }
 
 
@@ -442,12 +453,16 @@ namespace Style
         {
             int id_client = 0;
             int currDgvPositionVisits = 0;
-           
+            int iii = 0;
+
             if (GetCurrRowClientInDGV != null)
                 id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
-            
+
             if (dgvVisits.SelectedRows.Count > 0)
+            {
+                iii = dgvVisits.FirstDisplayedScrollingRowIndex;
                 currDgvPositionVisits = dgvVisits.SelectedRows[0].Index;
+            }
 
             DataSet data = new DataSet();
 
@@ -457,10 +472,10 @@ namespace Style
             visitsBindingSource.DataMember = "Visits";
 
             OrderByVisits(nameColumnOrderVisits, sortColumnOrderVisits);
-            //ставим курсор на последний визит и прокручиваем список к последним визитам
 
-            //dgvVisits.Rows[dgvVisits.RowCount - 1].Selected = true;
-            //dgvVisits.FirstDisplayedScrollingRowIndex = dgvVisits.RowCount - 1;
+            if (iii<dgvVisits.RowCount)
+                dgvVisits.FirstDisplayedScrollingRowIndex = iii;
+            
         }
 
         private void setNameColumnsDgvVisits()
@@ -594,9 +609,7 @@ namespace Style
             frmNewVisit newVisit = new frmNewVisit(false, this);
             if (newVisit.ShowDialog() == DialogResult.OK)
             {
-                dgvVisits.Enabled = false;
                 GetDataVisits();
-                dgvVisits.Enabled = true;
                 GetDataClients();
 
                 if (newVisit.idNewVisit > 0)
@@ -629,11 +642,8 @@ namespace Style
                     if (dgvVisits.SelectedRows.Count > 0)
                         curPosVisit = dgvVisits.SelectedRows[0].Index;
 
-                    //временно выключаем таблицу чтобы не мерцало 
-                    dgvVisits.Enabled = false;
                     GetDataVisits();
-                    dgvVisits.Enabled = true;
-                    GetDataVisits();
+
                     try
                     {
                        // scrollDgv(dgvVisits);
@@ -660,10 +670,7 @@ namespace Style
                     log.Info("id_visit = " + currIdVisit +" id_client = " +id_client);
                     
                     Program.dbStyle.DeleteVisit(currIdVisit);
-                    dgvVisits.Enabled = false;
                     GetDataVisits();
-                    dgvVisits.Enabled = true;
-                    GetDataClients();
                 }
             }
         }
@@ -739,10 +746,10 @@ namespace Style
             if (dgvClients.SelectedRows.Count > 0)
             {
                 FillClientInfo();
-
-                //id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
-            //    //discountConst = (int)GetCurrRowClientInDGV.Cells["DiscountConst"].Value;
                 GetDataVisits();
+                tsStatLb_NumClient.Text = (dgvClients.CurrentRow.Index + 1).ToString();
+                //id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+            //    //discountConst = (int)GetCurrRowClientInDGV.Cells["DiscountConst"].Value;                
             //    dgvClients.FirstDisplayedScrollingRowIndex = dgvClients.SelectedRows[0].Index;
             }
         }
@@ -870,6 +877,7 @@ namespace Style
 
         }
 
+        //подкрашиваем не акцептированные визиты 
         private void dgvVisits_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             if (e.RowIndex > -1 && e.RowIndex < dgvVisits.RowCount )
@@ -926,7 +934,7 @@ namespace Style
         {
             ReferenceForm frmRef = new ReferenceForm(References.ClientsWidthBirthday, false);
             frmRef.StartPosition = FormStartPosition.CenterScreen;
-            frmRef.Text = "День рождения клиентов";
+            frmRef.Text = "Дни рождения клиентов";
             frmRef.ShowDialog();
             frmRef.Dispose();
         }
@@ -936,6 +944,7 @@ namespace Style
             openReferenceFormClientsWidthBirthday();
         }
 
+        //подкрашиваем клиентов с неакцептированными визитами
         private void dgvClients_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             if (e.RowIndex > -1 && e.RowIndex < dgvClients.RowCount)
