@@ -92,15 +92,11 @@ namespace Style
             }
 
             //init_tsPeriod();
-
-            //Program.dbStyle = new DB();
-            ////Program.dbStyle.conn.StateChange += conn_StateChange;
-            //Program.dbStyle.ConnectDB();
-
+            
             dgvClients.DataSource = clientsBindingSource;
-            dgvClients.VirtualMode = true;
+            //dgvClients.VirtualMode = false;
             dgvVisits.DataSource = visitsBindingSource;
-            dgvVisits.VirtualMode = true;
+            //dgvVisits.VirtualMode = true;
 
             SetDoubleBuffered(dgvClients, true);
             SetDoubleBuffered(dgvVisits, true);
@@ -205,10 +201,20 @@ namespace Style
 
             OrderByClients(nameColumnOrderClients, sortColumnOrderClients);
 
-            //if (fl)
-            //{
-            //    searchClients(currDgvPositionClients-1);
-            //}
+        }
+
+        private void scrollDgv(DataGridView dgv)
+        {
+            int halfWay = (dgv.DisplayedRowCount(false) / 2);
+            if (dgv.FirstDisplayedScrollingRowIndex + halfWay > dgv.SelectedRows[0].Index ||
+                (dgv.FirstDisplayedScrollingRowIndex + dgv.DisplayedRowCount(false) - halfWay) <= dgv.SelectedRows[0].Index)
+            {
+                int targetRow = dgv.SelectedRows[0].Index;
+
+                targetRow = Math.Max(targetRow - halfWay, 0);
+                dgv.FirstDisplayedScrollingRowIndex = targetRow;
+
+            }
         }
 
         void setLabelBirthDays(DataSet _birthdayClient)
@@ -336,7 +342,10 @@ namespace Style
                 
                 NewClient newClient = new NewClient(true, this); //если режим изменения, то передаем на форму значение true
                 if (newClient.ShowDialog() == DialogResult.OK)
+                {
                     GetDataClients();
+                    scrollDgv(dgvClients);
+                }
                 newClient.Dispose();
             }
         }
@@ -356,6 +365,7 @@ namespace Style
                     
                     Program.dbStyle.DeleteClient(currIdClient);
                     GetDataClients();
+                    scrollDgv(dgvClients);
                     GetDataVisits();
                 }
             }
@@ -447,6 +457,10 @@ namespace Style
             visitsBindingSource.DataMember = "Visits";
 
             OrderByVisits(nameColumnOrderVisits, sortColumnOrderVisits);
+            //ставим курсор на последний визит и прокручиваем список к последним визитам
+
+            //dgvVisits.Rows[dgvVisits.RowCount - 1].Selected = true;
+            //dgvVisits.FirstDisplayedScrollingRowIndex = dgvVisits.RowCount - 1;
         }
 
         private void setNameColumnsDgvVisits()
@@ -504,6 +518,7 @@ namespace Style
         public string MiddleName = "";
         public DateTime? BirthDay ;
 
+        //выбор клиента ЛКМ
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int id_clientNew = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
@@ -511,30 +526,28 @@ namespace Style
             if (id_client != id_clientNew && dgvVisits.RowCount > 0)
                 dgvVisits.Rows[0].Selected = true;
 
-            id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
-            discountConst = (int)GetCurrRowClientInDGV.Cells["DiscountConst"].Value;
-            FirstName = (string)GetCurrRowClientInDGV.Cells["FirstName"].Value;
-            LastName = (string)GetCurrRowClientInDGV.Cells["LastName"].Value;
-            MiddleName = (string)GetCurrRowClientInDGV.Cells["MiddleName"].Value;
-            if (GetCurrRowClientInDGV.Cells["BirthDay"].Value != DBNull.Value)
-                BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
+            FillClientInfo();
         }
 
         private void dgvVisits_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvVisits.SelectedRows.Count > 0)
             {
-                id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
-                discountConst = (int)GetCurrRowClientInDGV.Cells["DiscountConst"].Value;
-                FirstName = (string)GetCurrRowClientInDGV.Cells["FirstName"].Value;
-                LastName = (string)GetCurrRowClientInDGV.Cells["LastName"].Value;
-                MiddleName = (string)GetCurrRowClientInDGV.Cells["MiddleName"].Value;
-               
-                if (GetCurrRowClientInDGV.Cells["BirthDay"].Value != DBNull.Value)                    
-                    BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
-
+                FillClientInfo();
                 EditVisit();
             }
+        }
+
+        private void FillClientInfo()
+        {
+            id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+            discountConst = (int)GetCurrRowClientInDGV.Cells["DiscountConst"].Value;
+            FirstName = (string)GetCurrRowClientInDGV.Cells["FirstName"].Value;
+            LastName = (string)GetCurrRowClientInDGV.Cells["LastName"].Value;
+            MiddleName = (string)GetCurrRowClientInDGV.Cells["MiddleName"].Value;
+
+            if (GetCurrRowClientInDGV.Cells["BirthDay"].Value != DBNull.Value)
+                BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
         }
 
         /// <summary>
@@ -553,13 +566,17 @@ namespace Style
 
         private void tlStrpBtnAddVisit_Click(object sender, EventArgs e)
         {
+            FillClientInfo(); 
             AddVisit();
         }
 
         private void tlStrpBtnEditVisit_Click(object sender, EventArgs e)
         {
             if (dgvVisits.SelectedRows.Count > 0)
+            {
+                FillClientInfo();
                 EditVisit();
+            }
         }
 
         private void tlStrpBtnDeleteVisit_Click(object sender, EventArgs e)
@@ -572,10 +589,14 @@ namespace Style
             if (findOpenForm("NewVisit"))
                 return;
 
+            id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+
             frmNewVisit newVisit = new frmNewVisit(false, this);
             if (newVisit.ShowDialog() == DialogResult.OK)
             {
+                dgvVisits.Enabled = false;
                 GetDataVisits();
+                dgvVisits.Enabled = true;
                 GetDataClients();
 
                 if (newVisit.idNewVisit > 0)
@@ -608,13 +629,16 @@ namespace Style
                     if (dgvVisits.SelectedRows.Count > 0)
                         curPosVisit = dgvVisits.SelectedRows[0].Index;
 
-                    GetDataClients();
+                    //временно выключаем таблицу чтобы не мерцало 
+                    dgvVisits.Enabled = false;
                     GetDataVisits();
-
+                    dgvVisits.Enabled = true;
+                    GetDataVisits();
                     try
                     {
-                        dgvClients.Rows[curPosClient].Selected = true;
-                        dgvVisits.Rows[curPosVisit].Selected = true;
+                       // scrollDgv(dgvVisits);
+                        //dgvClients.Rows[curPosClient].Selected = true;
+                        //dgvVisits.Rows[curPosVisit].Selected = true;
                     }
                     catch (Exception)
                     { }
@@ -636,7 +660,9 @@ namespace Style
                     log.Info("id_visit = " + currIdVisit +" id_client = " +id_client);
                     
                     Program.dbStyle.DeleteVisit(currIdVisit);
+                    dgvVisits.Enabled = false;
                     GetDataVisits();
+                    dgvVisits.Enabled = true;
                     GetDataClients();
                 }
             }
@@ -644,11 +670,13 @@ namespace Style
 
         private void ToolStripMenuItemAddVisit_Click(object sender, EventArgs e)
         {
+            FillClientInfo();
             AddVisit();
         }
 
         private void ToolStripMenuItemEditVisit_Click(object sender, EventArgs e)
         {
+            FillClientInfo();
             EditVisit();
         }
 
@@ -705,26 +733,36 @@ namespace Style
             //GetDataClients();
         }
 
+        //событие, что курсор в таблице сместился на другую строку
         private void dgvClients_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvClients.SelectedRows.Count > 0)
             {
+                FillClientInfo();
+
                 //id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
             //    //discountConst = (int)GetCurrRowClientInDGV.Cells["DiscountConst"].Value;
-                 //GetDataVisits();
+                GetDataVisits();
             //    dgvClients.FirstDisplayedScrollingRowIndex = dgvClients.SelectedRows[0].Index;
             }
         }
 
+        //кнопка поиска клиента
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             if (dgvClients.SelectedRows.Count < 1) return;
 
             if (searchClients(dgvClients.SelectedRows[0].Index))
+            {
+                scrollDgv(dgvClients);
                 return;
+            }
 
             if (dgvClients.SelectedRows[0].Index > 0)
+            {
                 searchClients(-1);
+                scrollDgv(dgvClients);
+            }
 
         }
 
@@ -747,22 +785,15 @@ namespace Style
 
                             if (str1.Contains(str2))
                             {
-                                dgvClients.Rows[idx].Selected = true;
-                                //dgvClients.FirstDisplayedScrollingRowIndex = selIndex + 1;
-                                dgvClients.FirstDisplayedScrollingRowIndex = idx;
+                                dgvClients.Rows[idx].Selected = true;                                
+                                //dgvClients.FirstDisplayedScrollingRowIndex = idx;
                                 dgvClients.CurrentCell = dgvClients.SelectedRows[0].Cells["FirstName"];
                                 int id_clientNew = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
                                 GetDataVisits();
                                 if (id_client != id_clientNew && dgvVisits.RowCount > 0)
                                     dgvVisits.Rows[0].Selected = true;
 
-                                id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
-                                discountConst = (int)GetCurrRowClientInDGV.Cells["DiscountConst"].Value;
-                                FirstName = (string)GetCurrRowClientInDGV.Cells["FirstName"].Value;
-                                LastName = (string)GetCurrRowClientInDGV.Cells["LastName"].Value;
-                                MiddleName = (string)GetCurrRowClientInDGV.Cells["MiddleName"].Value;
-                                if (GetCurrRowClientInDGV.Cells["BirthDay"].Value != DBNull.Value)
-                                    BirthDay = (DateTime)GetCurrRowClientInDGV.Cells["BirthDay"].Value;
+                                FillClientInfo();
 
                                 return true;
                             }
@@ -773,16 +804,23 @@ namespace Style
             return false;
         }
 
+        //кнопка поиска визита
         private void toolStripButton8_Click(object sender, EventArgs e)
         {
             if (dgvVisits.SelectedRows.Count < 1) return;
 
 
             if (searchVisits(dgvVisits.SelectedRows[0].Index))
+            {
+                scrollDgv(dgvVisits);
                 return;
+            }
 
             if (dgvVisits.SelectedRows[0].Index > 0)
+            {
                 searchVisits(-1);
+                scrollDgv(dgvVisits);
+            }
         }
 
         bool searchVisits(int selIndex)
@@ -939,10 +977,16 @@ namespace Style
                 if (dgvClients.SelectedRows.Count < 1) return;
 
                 if (searchClients(dgvClients.SelectedRows[0].Index))
+                {
+                    scrollDgv(dgvClients);
                     return;
+                }
 
                 if (dgvClients.SelectedRows[0].Index > 0)
+                {
                     searchClients(-1);
+                    scrollDgv(dgvClients);
+                }
             }
         }
 
@@ -953,9 +997,15 @@ namespace Style
                 if (dgvVisits.SelectedRows.Count < 1) 
                     return;
                 if (searchVisits(dgvVisits.SelectedRows[0].Index))
+                {
+                    scrollDgv(dgvVisits);
                     return;
+                }
                 if (dgvVisits.SelectedRows[0].Index > 0)
+                {
                     searchVisits(-1);
+                    scrollDgv(dgvVisits);
+                }
             }
         }
 
