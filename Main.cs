@@ -207,6 +207,19 @@ namespace Style
             dgvClients.FirstDisplayedScrollingRowIndex = iii;
             tsStatLbl_CntClient.Text = dgvClients.RowCount.ToString("000000");
 
+            toolStripStatusLabelUnAccept.Visible = false;
+            for (int i = 0; i < dgvClients.RowCount; i++)
+            {
+                if( (bool)dgvClients.Rows[i].Cells["Accept"].Value != true &&
+                    (int)dgvClients.Rows[i].Cells["CountVisits"].Value > 0)
+                {
+                    toolStripStatusLabelUnAccept.Visible = true;
+                    break;
+                }
+            }
+
+
+
         }
 
         private void scrollDgv(DataGridView dgv)
@@ -641,7 +654,8 @@ namespace Style
                     
                     if (dgvVisits.SelectedRows.Count > 0)
                         curPosVisit = dgvVisits.SelectedRows[0].Index;
-
+                    
+                    GetDataClients();
                     GetDataVisits();
 
                     try
@@ -884,8 +898,8 @@ namespace Style
             {
                 if ((bool)dgvVisits.Rows[e.RowIndex].Cells["Accept"].Value != true)
                     ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightPink;
-                //else
-                //    ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                else
+                    ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                 
             }
         }
@@ -953,7 +967,7 @@ namespace Style
                     (int)dgvClients.Rows[e.RowIndex].Cells["CountVisits"].Value > 0)
                     ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightPink;
                 else
-                    ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                    ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;                
             }
         }
 
@@ -1016,6 +1030,59 @@ namespace Style
                     scrollDgv(dgvVisits);
                 }
             }
+        }
+
+
+        private void toolStripStatusLabelUnAccept_Click(object sender, EventArgs e)
+        {
+            if (dgvClients.SelectedRows.Count < 1) return;
+
+            if (searchClientUnAccept(dgvClients.SelectedRows[0].Index))
+            {
+                scrollDgv(dgvClients);
+                return;
+            }
+
+            if (dgvClients.SelectedRows[0].Index > 0)
+            {
+                searchClientUnAccept(-1);
+                scrollDgv(dgvClients);
+            }
+        }
+
+        bool searchClientUnAccept(int selIndex)
+        {
+            for (int idx = selIndex + 1; idx < dgvClients.Rows.Count; idx++)
+            {
+                if ((bool)dgvClients.Rows[idx].Cells["Accept"].Value != true &&
+                    (int)dgvClients.Rows[idx].Cells["CountVisits"].Value > 0)
+                {
+                    dgvClients.Rows[idx].Selected = true;
+                    //dgvClients.FirstDisplayedScrollingRowIndex = idx;
+                    dgvClients.CurrentCell = dgvClients.SelectedRows[0].Cells["FirstName"];
+                    int id_clientNew = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+                    GetDataVisits();
+                    if (id_client != id_clientNew && dgvVisits.RowCount > 0)
+                        dgvVisits.Rows[0].Selected = true;
+
+                    FillClientInfo();
+
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
+        private void toolStripBtnFindCursor_Click(object sender, EventArgs e)
+        {
+            scrollDgv(dgvClients);
+        }
+
+        private void toolStripBtnFindCursorV_Click(object sender, EventArgs e)
+        {
+            scrollDgv(dgvVisits);
+
         }
 
 
