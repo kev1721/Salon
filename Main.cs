@@ -175,51 +175,58 @@ namespace Style
 
         private BindingSource clientsBindingSource = new BindingSource();
         DataSet _birthdayClient = new DataSet();
-        
+
         public void GetDataClients()
         {
-            bool fl = false;
-            int iii = 0;
-            if (dgvClients.SelectedRows.Count > 0)
+            object isLock = new object();
+
+
+            lock (isLock)
             {
-                iii = dgvClients.FirstDisplayedScrollingRowIndex;
 
-                currDgvPositionClients = dgvClients.SelectedRows[0].Index;
-                fl = true;
-            }
-
-            toolStripStatusLabel3.Text = "";
-            DataSet data = new DataSet();
-            DateTime? dt = null;
-            //if (toolStripButton7.Checked)
-            //    dt = dTP_BirthDay.Value;
-            data = Program.dbStyle.GetClients(dt);
-
-            _birthdayClient = Program.dbStyle.GetClients(DateTime.Now.Date);
-            toolStripStatusLabelBallon.Enabled = _birthdayClient.Tables[0].Rows.Count > 0;
-            setLabelBirthDays(_birthdayClient);
-
-            clientsBindingSource.DataSource = data;
-            clientsBindingSource.DataMember = "Clients";
-
-            OrderByClients(nameColumnOrderClients, sortColumnOrderClients);
-            
-            dgvClients.FirstDisplayedScrollingRowIndex = iii;
-            tsStatLbl_CntClient.Text = dgvClients.RowCount.ToString("000000");
-
-            toolStripStatusLabelUnAccept.Visible = false;
-            for (int i = 0; i < dgvClients.RowCount; i++)
-            {
-                if( (bool)dgvClients.Rows[i].Cells["Accept"].Value != true &&
-                    (int)dgvClients.Rows[i].Cells["CountVisits"].Value > 0)
+                bool fl = false;
+                int iii = 0;
+                if (dgvClients.SelectedRows.Count > 0)
                 {
-                    toolStripStatusLabelUnAccept.Visible = true;
-                    break;
+                    iii = dgvClients.FirstDisplayedScrollingRowIndex;
+
+                    currDgvPositionClients = dgvClients.SelectedRows[0].Index;
+                    fl = true;
                 }
+
+                toolStripStatusLabel3.Text = "";
+                DataSet data = new DataSet();
+                DateTime? dt = null;
+                //if (toolStripButton7.Checked)
+                //    dt = dTP_BirthDay.Value;
+                data = Program.dbStyle.GetClients(dt);
+
+                _birthdayClient = Program.dbStyle.GetClients(DateTime.Now.Date);
+                toolStripStatusLabelBallon.Enabled = _birthdayClient.Tables[0].Rows.Count > 0;
+                setLabelBirthDays(_birthdayClient);
+
+                clientsBindingSource.DataSource = data;
+                clientsBindingSource.DataMember = "Clients";
+
+                OrderByClients(nameColumnOrderClients, sortColumnOrderClients);
+
+                dgvClients.FirstDisplayedScrollingRowIndex = iii;
+                tsStatLbl_CntClient.Text = dgvClients.RowCount.ToString("000000");
+
+                //управление видимостью иконки неакцептированных визитов
+                toolStripStatusLabelUnAccept.Visible = false;
+                for (int i = 0; i < dgvClients.RowCount; i++)
+                {
+                    if ((bool)dgvClients.Rows[i].Cells["Accept"].Value != true &&
+                        (int)dgvClients.Rows[i].Cells["CountVisits"].Value > 0)
+                    {
+                        toolStripStatusLabelUnAccept.Visible = true;
+                        break;
+                    }
+                }
+
+
             }
-
-
-
         }
 
         private void scrollDgv(DataGridView dgv)
@@ -464,31 +471,41 @@ namespace Style
 
         public void GetDataVisits()
         {
-            int id_client = 0;
-            int currDgvPositionVisits = 0;
-            int iii = 0;
+            object isLock = new object();
 
-            if (GetCurrRowClientInDGV != null)
-                id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
 
-            if (dgvVisits.SelectedRows.Count > 0)
+            lock (isLock)
             {
-                iii = dgvVisits.FirstDisplayedScrollingRowIndex;
-                currDgvPositionVisits = dgvVisits.SelectedRows[0].Index;
+                int id_client = 0;
+                int currDgvPositionVisits = 0;
+                int iii = 0;
+
+                if (GetCurrRowClientInDGV != null)
+                    id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
+
+                if (dgvVisits.SelectedRows.Count > 0)
+                {
+                    iii = dgvVisits.FirstDisplayedScrollingRowIndex;
+                    currDgvPositionVisits = dgvVisits.SelectedRows[0].Index;
+                }
+
+                DataSet data = new DataSet();
+
+                data = Program.dbStyle.GetVisitsClient(id_client);
+
+                visitsBindingSource.DataSource = data;
+                visitsBindingSource.DataMember = "Visits";
+
+                OrderByVisits(nameColumnOrderVisits, sortColumnOrderVisits);
+
+                if (iii < dgvVisits.RowCount)
+                    dgvVisits.FirstDisplayedScrollingRowIndex = iii;
+
+                if (currDgvPositionVisits < dgvVisits.RowCount)
+                    dgvVisits.Rows[currDgvPositionVisits].Selected = true;
+                else
+                    dgvVisits.Rows[dgvVisits.RowCount - 1].Selected = true;
             }
-
-            DataSet data = new DataSet();
-
-            data = Program.dbStyle.GetVisitsClient(id_client);
-
-            visitsBindingSource.DataSource = data;
-            visitsBindingSource.DataMember = "Visits";
-
-            OrderByVisits(nameColumnOrderVisits, sortColumnOrderVisits);
-
-            if (iii<dgvVisits.RowCount)
-                dgvVisits.FirstDisplayedScrollingRowIndex = iii;
-            
         }
 
         private void setNameColumnsDgvVisits()
@@ -658,14 +675,6 @@ namespace Style
                     GetDataClients();
                     GetDataVisits();
 
-                    try
-                    {
-                       // scrollDgv(dgvVisits);
-                        //dgvClients.Rows[curPosClient].Selected = true;
-                        //dgvVisits.Rows[curPosVisit].Selected = true;
-                    }
-                    catch (Exception)
-                    { }
                 }
                 newVisite.Dispose();
             }
@@ -760,11 +769,7 @@ namespace Style
             if (dgvClients.SelectedRows.Count > 0)
             {
                 FillClientInfo();
-                GetDataVisits();
                 tsStatLb_NumClient.Text = (dgvClients.CurrentRow.Index + 1).ToString();
-                //id_client = (int)GetCurrRowClientInDGV.Cells["id_client"].Value;
-            //    //discountConst = (int)GetCurrRowClientInDGV.Cells["DiscountConst"].Value;                
-            //    dgvClients.FirstDisplayedScrollingRowIndex = dgvClients.SelectedRows[0].Index;
             }
         }
 
@@ -875,20 +880,11 @@ namespace Style
 
         private void ToolStripMenuItemAdmining_Click(object sender, EventArgs e)
         {
-            //using(FormNewPass frm = new FormNewPass())
-            //{
-            //    frm.ShowDialog();
-            //}
 
         }
 
         private void dgvVisits_SelectionChanged(object sender, EventArgs e)
         {
-            //if (dgvVisits.SelectedRows.Count > 0)
-            //{
-            //    dgvVisits.FirstDisplayedScrollingRowIndex = dgvVisits.SelectedRows[0].Index;
-            //}
-
         }
 
         //подкрашиваем не акцептированные визиты 
@@ -924,13 +920,6 @@ namespace Style
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            //if (toolStripStatusLabelBithDayClients.Text.Length > 0)
-            //{
-            //    string _buf = toolStripStatusLabelBithDayClients.Text.Substring(toolStripStatusLabelBithDayClients.Text.Length - 2);
-            //    toolStripStatusLabelBithDayClients.Text = toolStripStatusLabelBithDayClients.Text.Remove(toolStripStatusLabelBithDayClients.Text.Length - 2);
-            //    toolStripStatusLabelBithDayClients.Text = _buf + toolStripStatusLabelBithDayClients.Text;
-            //}
-
         }
 
         private void toolStripDropDownButton1_Click(object sender, EventArgs e)
