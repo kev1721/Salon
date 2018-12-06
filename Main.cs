@@ -504,7 +504,8 @@ namespace Style
                 if (currDgvPositionVisits < dgvVisits.RowCount)
                     dgvVisits.Rows[currDgvPositionVisits].Selected = true;
                 else
-                    dgvVisits.Rows[dgvVisits.RowCount - 1].Selected = true;
+                    if (dgvVisits.RowCount > 0) 
+                        dgvVisits.Rows[dgvVisits.RowCount - 1].Selected = true;
             }
         }
 
