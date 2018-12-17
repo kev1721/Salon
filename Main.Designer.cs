@@ -393,7 +393,7 @@
             this.toolStripBtnFindCursor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBtnFindCursor.Name = "toolStripBtnFindCursor";
             this.toolStripBtnFindCursor.Size = new System.Drawing.Size(23, 22);
-            this.toolStripBtnFindCursor.Text = "Добавить клиента";
+            this.toolStripBtnFindCursor.Text = "Найти клиента";
             this.toolStripBtnFindCursor.Click += new System.EventHandler(this.toolStripBtnFindCursor_Click);
             // 
             // toolStripButton1
@@ -596,7 +596,7 @@
             this.toolStripBtnFindCursorV.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBtnFindCursorV.Name = "toolStripBtnFindCursorV";
             this.toolStripBtnFindCursorV.Size = new System.Drawing.Size(23, 22);
-            this.toolStripBtnFindCursorV.Text = "Добавить посещение";
+            this.toolStripBtnFindCursorV.Text = "Найти посещение";
             this.toolStripBtnFindCursorV.Click += new System.EventHandler(this.toolStripBtnFindCursorV_Click);
             // 
             // tlStrpBtnAddVisit
@@ -690,6 +690,7 @@
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Система учета клиентов";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvClients)).EndInit();

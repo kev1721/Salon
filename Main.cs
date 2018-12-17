@@ -256,9 +256,12 @@ namespace Style
                     break;
                 }
                 StringBuilder str = new StringBuilder();
-                str.Append(" " + item.Field<string>("LastName"));
-                str.Append(" " + item.Field<string>("FirstName").Substring(0,1) + ".");
-                str.Append(" " + item.Field<string>("MiddleName").Substring(0, 1) + ".");
+                if (!String.IsNullOrEmpty(item.Field<string>("LastName")))
+                    str.Append(" " + item.Field<string>("LastName"));
+                if (!String.IsNullOrEmpty(item.Field<string>("FirstName")))
+                    str.Append(" " + item.Field<string>("FirstName").Substring(0,1) + ".");
+                if (!String.IsNullOrEmpty(item.Field<string>("MiddleName")))
+                    str.Append(" " + item.Field<string>("MiddleName").Substring(0, 1) + ".");
                 toolStripStatusLabelBirthDay.Text = toolStripStatusLabelBirthDay.Text + str.ToString() + ";";
             }
         }
