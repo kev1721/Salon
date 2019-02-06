@@ -245,36 +245,63 @@ namespace Style
                 }
                 else if (refs == References.Styles)
                 {
-                    fillCurrStyle();
+                    fillCurrStyles();
                 }
                 Close();    
             }
             
         }
 
+        //void fillCurrMaterial()
+        //{
+        //    currMaterial = new MaterialVisit();
+        //    currMaterial.Id = -1;
+        //    currMaterial.Id_mat = (int)dataGridView1.CurrentRow.Cells["id"].Value;
+        //    currMaterial.Name_m = dataGridView1.CurrentRow.Cells["name_m"].Value.ToString();
+        //    currMaterial.Amount = 0;
+        //    currMaterial.Ed_izm = "";
+        //}
+
         void fillCurrMaterial()
         {
-            currMaterial = new MaterialVisit();
-            currMaterial.Id = -1;
-            currMaterial.Id_mat = (int)dataGridView1.CurrentRow.Cells["id"].Value;
-            currMaterial.Name_m = dataGridView1.CurrentRow.Cells["name_m"].Value.ToString();
-            currMaterial.Amount = 0;
-            currMaterial.Ed_izm = "";
+            currMaterials = new List<MaterialVisit>();
+
+            for (int i = dataGridView1.SelectedRows.Count - 1; i >= 0; i--)
+            {
+                currMaterial = new MaterialVisit();
+                currMaterial.Id = -1;
+                currMaterial.Id_mat = (int)dataGridView1.SelectedRows[i].Cells["id"].Value;
+                currMaterial.Name_m = dataGridView1.SelectedRows[i].Cells["name_m"].Value.ToString();
+                currMaterial.Amount = 0;
+                currMaterial.Ed_izm = "";
+
+                currMaterials.Add(currMaterial);
+            }
         }
 
-        void fillCurrStyle()
+
+        void fillCurrStyles()
         {
-            currStyle = new StyleVisit();
-            currStyle.Id = -1;
-            currStyle.Id_style = (int)dataGridView1.CurrentRow.Cells["id"].Value;
-            currStyle.Name_st = dataGridView1.CurrentRow.Cells["name_style"].Value.ToString();            
-            currStyle.Id_employ = -1;
-            currStyle.Cost = 0;
+            currStyles = new List<StyleVisit>();
+
+            for (int i = dataGridView1.SelectedRows.Count - 1; i >= 0; i--)
+            {
+                currStyle = new StyleVisit();
+                currStyle.Id = -1; 
+                currStyle.Id_style = (int)dataGridView1.SelectedRows[i].Cells["id"].Value;
+                currStyle.Name_st = dataGridView1.SelectedRows[i].Cells["name_style"].Value.ToString();
+                currStyle.Id_employ = -1;
+                currStyle.Cost = 0;
+
+                currStyles.Add(currStyle);
+            }
         }
 
 
         public MaterialVisit currMaterial = null;
+        public List<MaterialVisit> currMaterials = null;
         public StyleVisit currStyle = null;
+        public List<StyleVisit> currStyles = null;
         /// <summary>
         /// Настройка характеристик (заголовок, видимость полей) справочника в зависимости от его имени
         /// </summary>
@@ -390,7 +417,7 @@ namespace Style
                 }
                 else if (refs == References.Styles)
                 {
-                    fillCurrStyle();
+                    fillCurrStyles();
                 }
                 this.DialogResult = DialogResult.OK;
                 Close();

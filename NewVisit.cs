@@ -795,21 +795,21 @@ namespace Style
             {
                 if (spr.ShowDialog() == DialogResult.OK)
                 {
-                        //foreach (Material item in mv)
-                        //{
-                        //    if (item.Name_m.Equals(spr.currMaterial.Name_m))
-                        //        MessageBox.Show("");
-                        //}
 
-                    mv.Add(spr.currMaterial);
-                    //((MaterialsVisit)dgvMaterials.DataSource).Add();
+                    for (int i = 0; i < spr.currMaterials.Count; i++)
+                    {
+                        mv.Add(spr.currMaterials[i]);
+                    }
+
+                    //mv.Add(spr.currMaterial);
                 }
             }
         }
 
         private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
         {
-            mv.RemoveAt(dgvMaterials.CurrentRow.Index);
+            if (dgvMaterials.CurrentRow != null)
+                mv.RemoveAt(dgvMaterials.CurrentRow.Index);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -839,13 +839,11 @@ namespace Style
             {
                 if (spr.ShowDialog() == DialogResult.OK)
                 {
-                    //foreach (Material item in mv)
-                    //{
-                    //    if (item.Name_m.Equals(spr.currMaterial.Name_m))
-                    //        MessageBox.Show("");
-                    //}
+                    for (int i = 0; i < spr.currStyles.Count; i++)
+                    {
+                        styles.Add(spr.currStyles[i]);
+                    }
 
-                    styles.Add(spr.currStyle);
                     txtBxCostStyle.Text = styles.GetCostStyles.ToString();
                     //((MaterialsVisit)dgvMaterials.DataSource).Add();
                 }
@@ -854,7 +852,8 @@ namespace Style
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            styles.RemoveAt(dgvStyles.CurrentRow.Index);
+            if (dgvStyles.CurrentRow !=null)
+                styles.RemoveAt(dgvStyles.CurrentRow.Index);
             txtBxCostStyle.Text = styles.GetCostStyles.ToString();
         }
 

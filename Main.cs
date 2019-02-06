@@ -697,6 +697,12 @@ namespace Style
                     log.Info("id_visit = " + currIdVisit +" id_client = " +id_client);
                     
                     Program.dbStyle.DeleteVisit(currIdVisit);
+
+                    int curPosClient = 0;
+
+                    if (dgvClients.SelectedRows.Count > 0)
+                        curPosClient = dgvClients.SelectedRows[0].Index;
+                    GetDataClients();
                     GetDataVisits();
                 }
             }
