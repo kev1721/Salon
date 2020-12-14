@@ -42,7 +42,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lbl_mob1 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
@@ -50,6 +50,10 @@
             this.dateTPBirthday = new System.Windows.Forms.DateTimePicker();
             this.maskTxtBxTelMobile = new System.Windows.Forms.MaskedTextBox();
             this.maskTxtBxTelHome = new System.Windows.Forms.MaskedTextBox();
+            this.maskTxtBxTelMobile2 = new System.Windows.Forms.MaskedTextBox();
+            this.lbl_mob2 = new System.Windows.Forms.Label();
+            this.maskTxtBxTelMobile3 = new System.Windows.Forms.MaskedTextBox();
+            this.lbl_mob3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtBxLastName
@@ -75,7 +79,7 @@
             // 
             // txtBxAddress
             // 
-            this.txtBxAddress.Location = new System.Drawing.Point(406, 94);
+            this.txtBxAddress.Location = new System.Drawing.Point(406, 120);
             this.txtBxAddress.Multiline = true;
             this.txtBxAddress.Name = "txtBxAddress";
             this.txtBxAddress.Size = new System.Drawing.Size(152, 46);
@@ -151,7 +155,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(297, 110);
+            this.label6.Location = new System.Drawing.Point(297, 120);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(103, 13);
             this.label6.TabIndex = 15;
@@ -160,20 +164,20 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(321, 71);
+            this.label7.Location = new System.Drawing.Point(323, 97);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(79, 13);
             this.label7.TabIndex = 16;
             this.label7.Text = "Дом. телефон";
             // 
-            // label8
+            // lbl_mob1
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(323, 45);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(77, 13);
-            this.label8.TabIndex = 17;
-            this.label8.Text = "Моб. телефон";
+            this.lbl_mob1.AutoSize = true;
+            this.lbl_mob1.Location = new System.Drawing.Point(323, 18);
+            this.lbl_mob1.Name = "lbl_mob1";
+            this.lbl_mob1.Size = new System.Drawing.Size(86, 13);
+            this.lbl_mob1.TabIndex = 17;
+            this.lbl_mob1.Text = "Моб. телефон 1";
             // 
             // label9
             // 
@@ -227,7 +231,7 @@
             // 
             // maskTxtBxTelMobile
             // 
-            this.maskTxtBxTelMobile.Location = new System.Drawing.Point(406, 42);
+            this.maskTxtBxTelMobile.Location = new System.Drawing.Point(406, 15);
             this.maskTxtBxTelMobile.Mask = "0-000-0000000";
             this.maskTxtBxTelMobile.Name = "maskTxtBxTelMobile";
             this.maskTxtBxTelMobile.Size = new System.Drawing.Size(152, 20);
@@ -236,12 +240,48 @@
             // 
             // maskTxtBxTelHome
             // 
-            this.maskTxtBxTelHome.Location = new System.Drawing.Point(406, 68);
+            this.maskTxtBxTelHome.Location = new System.Drawing.Point(406, 94);
             this.maskTxtBxTelHome.Mask = "0-00-00";
             this.maskTxtBxTelHome.Name = "maskTxtBxTelHome";
             this.maskTxtBxTelHome.Size = new System.Drawing.Size(152, 20);
             this.maskTxtBxTelHome.TabIndex = 24;
             this.maskTxtBxTelHome.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            // 
+            // maskTxtBxTelMobile2
+            // 
+            this.maskTxtBxTelMobile2.Location = new System.Drawing.Point(406, 41);
+            this.maskTxtBxTelMobile2.Mask = "0-000-0000000";
+            this.maskTxtBxTelMobile2.Name = "maskTxtBxTelMobile2";
+            this.maskTxtBxTelMobile2.Size = new System.Drawing.Size(152, 20);
+            this.maskTxtBxTelMobile2.TabIndex = 26;
+            this.maskTxtBxTelMobile2.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            // 
+            // lbl_mob2
+            // 
+            this.lbl_mob2.AutoSize = true;
+            this.lbl_mob2.Location = new System.Drawing.Point(323, 44);
+            this.lbl_mob2.Name = "lbl_mob2";
+            this.lbl_mob2.Size = new System.Drawing.Size(86, 13);
+            this.lbl_mob2.TabIndex = 25;
+            this.lbl_mob2.Text = "Моб. телефон 2";
+            // 
+            // maskTxtBxTelMobile3
+            // 
+            this.maskTxtBxTelMobile3.Location = new System.Drawing.Point(406, 68);
+            this.maskTxtBxTelMobile3.Mask = "0-000-0000000";
+            this.maskTxtBxTelMobile3.Name = "maskTxtBxTelMobile3";
+            this.maskTxtBxTelMobile3.Size = new System.Drawing.Size(152, 20);
+            this.maskTxtBxTelMobile3.TabIndex = 28;
+            this.maskTxtBxTelMobile3.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            // 
+            // lbl_mob3
+            // 
+            this.lbl_mob3.AutoSize = true;
+            this.lbl_mob3.Location = new System.Drawing.Point(323, 71);
+            this.lbl_mob3.Name = "lbl_mob3";
+            this.lbl_mob3.Size = new System.Drawing.Size(86, 13);
+            this.lbl_mob3.TabIndex = 27;
+            this.lbl_mob3.Text = "Моб. телефон 3";
             // 
             // NewClient
             // 
@@ -250,6 +290,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(570, 252);
+            this.Controls.Add(this.maskTxtBxTelMobile3);
+            this.Controls.Add(this.lbl_mob3);
+            this.Controls.Add(this.maskTxtBxTelMobile2);
+            this.Controls.Add(this.lbl_mob2);
             this.Controls.Add(this.maskTxtBxTelHome);
             this.Controls.Add(this.maskTxtBxTelMobile);
             this.Controls.Add(this.dateTPBirthday);
@@ -257,7 +301,7 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.lbl_mob1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -277,8 +321,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Новый клиент";
             this.TopMost = true;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewClient_FormClosed);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NewClient_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewClient_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -300,7 +344,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lbl_mob1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btnSave;
@@ -308,5 +352,9 @@
         private System.Windows.Forms.DateTimePicker dateTPBirthday;
         private System.Windows.Forms.MaskedTextBox maskTxtBxTelMobile;
         private System.Windows.Forms.MaskedTextBox maskTxtBxTelHome;
+        private System.Windows.Forms.MaskedTextBox maskTxtBxTelMobile2;
+        private System.Windows.Forms.Label lbl_mob2;
+        private System.Windows.Forms.MaskedTextBox maskTxtBxTelMobile3;
+        private System.Windows.Forms.Label lbl_mob3;
     }
 }

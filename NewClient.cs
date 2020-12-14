@@ -61,6 +61,8 @@ namespace Style
             public string Notes;
             public string DiscountConst;
             public string TelMobile;
+            public string TelMobile2;
+            public string TelMobile3;
             public string TelHome;
             public DateTime Birthday;
         }
@@ -81,6 +83,8 @@ namespace Style
             txtBxDiscountConst.Text = _row.Cells["DiscountConst"].Value.ToString();
 
             maskTxtBxTelMobile.Text = _row.Cells["TelMobile"].Value.ToString();
+            maskTxtBxTelMobile2.Text = _row.Cells["TelMobile2"].Value.ToString();
+            maskTxtBxTelMobile3.Text = _row.Cells["TelMobile3"].Value.ToString();
             maskTxtBxTelHome.Text = _row.Cells["TelHome"].Value.ToString();
 
             if (_row.Cells["Birthday"].Value != DBNull.Value)
@@ -103,6 +107,8 @@ namespace Style
             bufData.DiscountConst = txtBxDiscountConst.Text.Trim(' ');
 
             bufData.TelMobile = maskTxtBxTelMobile.Text;
+            bufData.TelMobile2 = maskTxtBxTelMobile2.Text;
+            bufData.TelMobile3 = maskTxtBxTelMobile3.Text;
             bufData.TelHome = maskTxtBxTelHome.Text;
 
             bufData.Birthday = dateTPBirthday.Value;
@@ -120,6 +126,8 @@ namespace Style
                     !bufData.DiscountConst.Equals(txtBxDiscountConst.Text.Trim(' ')) ||
 
                     !bufData.TelMobile.Equals(maskTxtBxTelMobile.Text.Trim(' ')) ||
+                    !bufData.TelMobile2.Equals(maskTxtBxTelMobile2.Text.Trim(' ')) ||
+                    !bufData.TelMobile3.Equals(maskTxtBxTelMobile3.Text.Trim(' ')) ||
                     !bufData.TelHome.Equals(maskTxtBxTelHome.Text.Trim(' ')) ||
 
                     !bufData.Birthday.Date.Equals(dateTPBirthday.Value.Date))
@@ -181,13 +189,15 @@ namespace Style
             log.Info("Attempt update client...");
 
             log.Info("id_client = " + id_client + " LastName = " + txtBxLastName.Text.Trim(' ') + " FirstName = " + txtBxFirstName.Text.Trim(' ') +
-                " MiddleName = " + txtBxMiddleName.Text.Trim(' ') + " TelMobile = " + maskTxtBxTelMobile.Text.Trim(' ') + " TelHome = " + maskTxtBxTelHome.Text.Trim(' ') +
+                " MiddleName = " + txtBxMiddleName.Text.Trim(' ') + " TelMobile = " + maskTxtBxTelMobile.Text.Trim(' ') + " TelMobile2 = " + maskTxtBxTelMobile2.Text.Trim(' ') +
+                " TelMobile3 = " + maskTxtBxTelMobile3.Text.Trim(' ') + " TelHome = " + maskTxtBxTelHome.Text.Trim(' ') +
                 " Address = " + txtBxAddress.Text.Trim(' ') + " Birthday = " + dt1 + " discount = " + discount + " Notes = " + txtBxNotes.Text.Trim(' ')
                 );
 
             return Program.dbStyle.UpdateClient(id_client,
                   txtBxLastName.Text.Trim(' '), txtBxFirstName.Text.Trim(' '), txtBxMiddleName.Text.Trim(' '),
-                  maskTxtBxTelMobile.Text.Trim(' '), maskTxtBxTelHome.Text.Trim(' '),
+                  maskTxtBxTelMobile.Text.Trim(' '), maskTxtBxTelMobile2.Text.Trim(' '), maskTxtBxTelMobile3.Text.Trim(' '), 
+                  maskTxtBxTelHome.Text.Trim(' '),
                   txtBxAddress.Text.Trim(' '),
                   dt1,
                   discount,
@@ -217,12 +227,14 @@ namespace Style
             log.Info("Attempt insert client...");
 
             log.Info("id_client = " + id_client + " LastName = " + txtBxLastName.Text.Trim(' ') + " FirstName = " + txtBxFirstName.Text.Trim(' ')+
-                " MiddleName = " + txtBxMiddleName.Text.Trim(' ') + " TelMobile = " + maskTxtBxTelMobile.Text.Trim(' ') + " TelHome = " + maskTxtBxTelHome.Text.Trim(' ') +
+                " MiddleName = " + txtBxMiddleName.Text.Trim(' ') + " TelMobile = " + maskTxtBxTelMobile.Text.Trim(' ') + " TelMobile2 = " + maskTxtBxTelMobile2.Text.Trim(' ') +
+                " TelMobile3 = " + maskTxtBxTelMobile3.Text.Trim(' ') + " TelHome = " + maskTxtBxTelHome.Text.Trim(' ') +
                 " Address = " + txtBxAddress.Text.Trim(' ') + " Birthday = " + dt1 + " discount = " + discount + " Notes = " + txtBxNotes.Text.Trim(' ')
                 );
 
             Program.dbStyle.InsertClient(txtBxLastName.Text.Trim(' '), txtBxFirstName.Text.Trim(' '), txtBxMiddleName.Text.Trim(' '),
-                maskTxtBxTelMobile.Text.Trim(' '), maskTxtBxTelHome.Text.Trim(' '),
+                maskTxtBxTelMobile.Text.Trim(' '), maskTxtBxTelMobile2.Text.Trim(' '), maskTxtBxTelMobile3.Text.Trim(' '),
+                maskTxtBxTelHome.Text.Trim(' '),
                 txtBxAddress.Text.Trim(' '),
                 dt1,
                 discount,
@@ -328,5 +340,6 @@ namespace Style
                 }
             }
         }
+
     }
 }

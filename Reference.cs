@@ -159,7 +159,9 @@ namespace Style
                     dataGridView1.Columns["FirstName"].HeaderText = "Имя";
                     dataGridView1.Columns["MiddleName"].HeaderText = "Отчество";
                     dataGridView1.Columns["DiscountConst"].HeaderText = "Скидка пост";
-                    dataGridView1.Columns["TelMobile"].HeaderText = "Моб. тел.";
+                    dataGridView1.Columns["TelMobile"].HeaderText = "Моб. тел. 1";
+                    dataGridView1.Columns["TelMobile2"].HeaderText = "Моб. тел. 2";
+                    dataGridView1.Columns["TelMobile3"].HeaderText = "Моб. тел. 3";
                     dataGridView1.Columns["TelHome"].HeaderText = "Дом. тел.";
                     break;
                 case References.UsersPrg:

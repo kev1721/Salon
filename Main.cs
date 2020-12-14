@@ -12,6 +12,7 @@ using System.Reflection;
 
 namespace Style
 {
+
     public partial class Main : Form
     {
 
@@ -224,8 +225,6 @@ namespace Style
                         break;
                     }
                 }
-
-
             }
         }
 
@@ -283,25 +282,42 @@ namespace Style
                 dgvClients.Columns["Notes"].Visible = false;
 
                 dgvClients.Columns["LastName"].HeaderText = "Фамилия";
-                //dataGridView1.Columns["LastName"].Width = 90;
+                //dataGridView1.Columns["LastName"].Width = 90;                
                 
                 dgvClients.Columns["FirstName"].HeaderText = "Имя";
                 //dataGridView1.Columns["FirstName"].Width = 90;
-                
+
                 dgvClients.Columns["MiddleName"].HeaderText = "Отчество";
                 //dataGridView1.Columns["MiddleName"].Width = 90;
                 
-                dgvClients.Columns["TelMobile"].HeaderText = "Моб. тел.";
-                //dataGridView1.Columns["MiddleName"].Width = 40;
+                dgvClients.Columns["TelMobile"].HeaderText = "Моб. тел. 1";
+                dgvClients.Columns["TelMobile"].Width = 80;
+
+                dgvClients.Columns["TelMobile2"].HeaderText = "Моб. тел. 2";
+                dgvClients.Columns["TelMobile2"].Width = 80; 
+                
+                dgvClients.Columns["TelMobile3"].HeaderText = "Моб. тел. 3";
+                dgvClients.Columns["TelMobile3"].Width = 80;
 
                 dgvClients.Columns["TelHome"].HeaderText = "Дом. тел.";
                 dgvClients.Columns["TelHome"].Width = 50;
 
                 dgvClients.Columns["Birthday"].HeaderText = "Дата рождения";
-                dgvClients.Columns["Birthday"].Width = 60;
+                dgvClients.Columns["Birthday"].Width = 70;
                 
                 dgvClients.Columns["DiscountConst"].HeaderText = "Скидка пост.";
                 dgvClients.Columns["DiscountConst"].Width = 60;
+
+
+                // order columns
+                
+                dgvClients.Columns["LastName"].DisplayIndex = 1;
+                dgvClients.Columns["FirstName"].DisplayIndex = 2;
+                dgvClients.Columns["MiddleName"].DisplayIndex = 3;
+                dgvClients.Columns["Birthday"].DisplayIndex = 4;
+                dgvClients.Columns["TelMobile"].DisplayIndex = 5;
+                dgvClients.Columns["TelMobile2"].DisplayIndex = 6;
+                dgvClients.Columns["TelMobile3"].DisplayIndex = 7;
 
             }
         }
@@ -811,6 +827,8 @@ namespace Style
                     if (dgvClients.Columns[column].Name.Equals("LastName") ||
                         dgvClients.Columns[column].Name.Equals("FirstName") ||
                         dgvClients.Columns[column].Name.Equals("TelMobile") ||
+                        dgvClients.Columns[column].Name.Equals("TelMobile2") ||
+                        dgvClients.Columns[column].Name.Equals("TelMobile3") ||
                         dgvClients.Columns[column].Name.Equals("TelHome") ||
                         dgvClients.Columns[column].Name.Equals("Birthday"))
                     {

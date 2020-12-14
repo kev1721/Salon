@@ -92,7 +92,7 @@ namespace Style
         }
 
         public bool UpdateClient(UInt32 idClient, string LastName, string FirstName, string MiddleName,
-            string telMobile, string telHome,
+            string telMobile, string telMobile2, string telMobile3, string telHome,
             string address, DateTime? birthDay, uint discountConst, string notes)
         {
             if (conn.State != System.Data.ConnectionState.Open)
@@ -109,6 +109,8 @@ namespace Style
                        " FirstName = @FirstName, " +
                        " MiddleName = @MiddleName, " +
                        " telMobile = @telMobile, " +
+                       " telMobile2 = @telMobile2, " +
+                       " telMobile3 = @telMobile3, " +
                        " telHome = @telHome, " +
                        " address = @address, " +
                        " birthDay = @birthDay, " +
@@ -123,6 +125,8 @@ namespace Style
                 command.Parameters.Add("@FirstName", OleDbType.VarChar).Value = FirstName;
                 command.Parameters.Add("@MiddleName", OleDbType.VarChar).Value = MiddleName;
                 command.Parameters.Add("@telMobile", OleDbType.VarChar).Value = telMobile;
+                command.Parameters.Add("@telMobile2", OleDbType.VarChar).Value = telMobile2;
+                command.Parameters.Add("@telMobile3", OleDbType.VarChar).Value = telMobile3;
                 command.Parameters.Add("@telHome", OleDbType.VarChar).Value = telHome;
                 command.Parameters.Add("@address", OleDbType.VarChar).Value = address;
                 if (birthDay != null)
@@ -149,8 +153,8 @@ namespace Style
 
         }
         
-        public bool InsertClient(string LastName, string FirstName, string MiddleName, 
-            string telMobile, string telHome, 
+        public bool InsertClient(string LastName, string FirstName, string MiddleName,
+            string telMobile, string telMobile2, string telMobile3, string telHome, 
             string address, DateTime? birthDay, uint discountConst, string notes, out int idNewclient)
         {
             Int32 id = idNewclient = -1;
@@ -179,8 +183,8 @@ namespace Style
 
             id++;
             string insertSQL =  "INSERT INTO [Clients] " +
-                                " (id_client, LastName, FirstName, MiddleName, telMobile, telHome, address, birthDay, discountConst, notes) " +
-                                " VALUES (@id_client, @LastName, @FirstName, @MiddleName, @telMobile, @telHome, @address, @birthDay, @discountConst, @notes) ";
+                                " (id_client, LastName, FirstName, MiddleName, telMobile, telMobile2, telMobile3, telHome, address, birthDay, discountConst, notes) " +
+                                " VALUES (@id_client, @LastName, @FirstName, @MiddleName, @telMobile, @telMobile2, @telMobile3, @telHome, @address, @birthDay, @discountConst, @notes) ";
 
             using (OleDbCommand command = new OleDbCommand(insertSQL))
             {
@@ -191,6 +195,8 @@ namespace Style
                 command.Parameters.Add("@FirstName", OleDbType.VarChar).Value = FirstName;
                 command.Parameters.Add("@MiddleName", OleDbType.VarChar).Value = MiddleName;
                 command.Parameters.Add("@telMobile", OleDbType.VarChar).Value = telMobile;
+                command.Parameters.Add("@telMobile2", OleDbType.VarChar).Value = telMobile2;
+                command.Parameters.Add("@telMobile3", OleDbType.VarChar).Value = telMobile3;
                 command.Parameters.Add("@telHome", OleDbType.VarChar).Value = telHome;
                 command.Parameters.Add("@address", OleDbType.VarChar).Value = address;
                 if (birthDay != null)
