@@ -270,8 +270,39 @@ namespace Style
             return ds;
         }
 
+        public DataSet GetClientsWithBirthdayDS(DateTime dt)
+        {
+            string cmdTxt = "Select *, (SELECT top 1 visits.accept " +
+                                " from visits " +
+                                " where clients.id_client = visits.id_client " +
+                                " group by accept order by accept desc) as Accept, " +
+                                " (SELECT  count(*) from visits " +
+                                " where clients.id_client = visits.id_client) as CountVisits " +
+                                " from [Clients] ";
+            string cmdPeriod = " where MONTH(BirthDay) = @dtMonth AND DAY(BirthDay) = @dtDay ";
+            DataSet ds = new DataSet();
+            OleDbCommand cmd;
 
-        internal DataTable GetClientsBirthday(DateTime dateBirthday)
+            try
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
+                cmd = new OleDbCommand(cmdTxt + cmdPeriod, conn);
+                cmd.Parameters.Add("@dtMonth", OleDbType.Integer).Value = dt.Month;
+                cmd.Parameters.Add("@dtDay", OleDbType.Integer).Value = dt.Day;
+
+                (new OleDbDataAdapter(cmd)).Fill(ds, "Clients");
+            }
+            catch (Exception ex)
+            {
+                log.Error("SQL. Error - get clients. " + ex.ToString());
+                MessageBox.Show("Невозможно получить клиентов из базы данных, у которых сегодня день рождения");
+            }
+            return ds;
+        }
+
+        internal DataTable GetClientsWithBirthdayDT(DateTime dateBirthday)
         {
             DataTable dt = new DataTable();
 
@@ -284,26 +315,28 @@ namespace Style
                 catch { return dt; }
             }
 
-            string selectSQL = "Select * from [Clients] where Birthday = @dateBirthday";
+            string selectSQL = "Select * from [Clients] where MONTH(BirthDay) = @dtMonth AND DAY(BirthDay) = @dtDay";
             try
             {
                 using (OleDbCommand commd = new OleDbCommand(selectSQL, conn))
                 {
-                    commd.Parameters.Add("@dateBirthday", OleDbType.Date).Value = dateBirthday.Date;
+                    commd.Parameters.Add("@dtMonth", OleDbType.Integer).Value = dateBirthday.Month;
+                    commd.Parameters.Add("@dtDay", OleDbType.Integer).Value = dateBirthday.Day;
 
                     OleDbDataAdapter da = new OleDbDataAdapter(commd);
                     da.Fill(dt);
                 }
-               // log.Info("SQL. OK - get clients birthday dateBirthday = " + dateBirthday.Date.ToShortDateString());
+                // log.Info("SQL. OK - get clients birthday dateBirthday = " + dateBirthday.Date.ToShortDateString());
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 log.Error("SQL. Error - get clients dateBirthday = " + dateBirthday.Date.ToShortDateString() + " . " + ex.ToString());
             }
 
             return dt;
         }
+
 
         public bool DeleteVisit(UInt32 id)
         {

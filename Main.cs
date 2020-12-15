@@ -103,7 +103,7 @@ namespace Style
             SetDoubleBuffered(dgvVisits, true);
 
             GetDataClients();
-            setNameColumnsDgvClients();
+            //setNameColumnsDgvClients();
 
             GetDataVisits();
             setNameColumnsDgvVisits();
@@ -202,7 +202,8 @@ namespace Style
                 //    dt = dTP_BirthDay.Value;
                 data = Program.dbStyle.GetClients(dt);
 
-                _birthdayClient = Program.dbStyle.GetClients(DateTime.Now.Date);
+                //_birthdayClient = Program.dbStyle.GetClients(DateTime.Now.Date);
+                _birthdayClient = Program.dbStyle.GetClientsWithBirthdayDS(DateTime.Now.Date);
                 toolStripStatusLabelBallon.Enabled = _birthdayClient.Tables[0].Rows.Count > 0;
                 setLabelBirthDays(_birthdayClient);
 
@@ -226,6 +227,7 @@ namespace Style
                     }
                 }
             }
+            setNameColumnsDgvClients();
         }
 
         private void scrollDgv(DataGridView dgv)
@@ -291,22 +293,22 @@ namespace Style
                 //dataGridView1.Columns["MiddleName"].Width = 90;
                 
                 dgvClients.Columns["TelMobile"].HeaderText = "Моб. тел. 1";
-                dgvClients.Columns["TelMobile"].Width = 80;
+                //dgvClients.Columns["TelMobile"].Width = 80;
 
                 dgvClients.Columns["TelMobile2"].HeaderText = "Моб. тел. 2";
-                dgvClients.Columns["TelMobile2"].Width = 80; 
+                //dgvClients.Columns["TelMobile2"].Width = 80; 
                 
                 dgvClients.Columns["TelMobile3"].HeaderText = "Моб. тел. 3";
-                dgvClients.Columns["TelMobile3"].Width = 80;
+                //dgvClients.Columns["TelMobile3"].Width = 80;
 
                 dgvClients.Columns["TelHome"].HeaderText = "Дом. тел.";
-                dgvClients.Columns["TelHome"].Width = 50;
+                //dgvClients.Columns["TelHome"].Width = 50;
 
                 dgvClients.Columns["Birthday"].HeaderText = "Дата рождения";
-                dgvClients.Columns["Birthday"].Width = 70;
+                //dgvClients.Columns["Birthday"].Width = 70;
                 
                 dgvClients.Columns["DiscountConst"].HeaderText = "Скидка пост.";
-                dgvClients.Columns["DiscountConst"].Width = 60;
+                //dgvClients.Columns["DiscountConst"].Width = 60;
 
 
                 // order columns
@@ -318,7 +320,7 @@ namespace Style
                 dgvClients.Columns["TelMobile"].DisplayIndex = 5;
                 dgvClients.Columns["TelMobile2"].DisplayIndex = 6;
                 dgvClients.Columns["TelMobile3"].DisplayIndex = 7;
-
+                
             }
         }
 

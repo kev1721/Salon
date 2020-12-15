@@ -194,7 +194,7 @@ namespace Style
                     bindingSource1.DataSource = Program.dbStyle.GetDataReference("Select * from " + "[" + ti.TableName + "]", false);
             }
             else
-                bindingSource1.DataSource = Program.dbStyle.GetClientsBirthday(DateTime.Now);
+                bindingSource1.DataSource = Program.dbStyle.GetClientsWithBirthdayDT(DateTime.Now);
 
             dataGridView1.DataSource = bindingSource1;
             bindingNavigator1.BindingSource = bindingSource1;
