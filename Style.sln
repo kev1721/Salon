@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Style", "Style.csproj", "{500C8FEA-D90E-4234-A49E-BCBE8841BDAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddColumnsTelMobile", "AddColumnsTelMobile\AddColumnsTelMobile.csproj", "{1D4380DF-8359-4733-80A8-BA63B983B3AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{500C8FEA-D90E-4234-A49E-BCBE8841BDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{500C8FEA-D90E-4234-A49E-BCBE8841BDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{500C8FEA-D90E-4234-A49E-BCBE8841BDAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D4380DF-8359-4733-80A8-BA63B983B3AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D4380DF-8359-4733-80A8-BA63B983B3AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D4380DF-8359-4733-80A8-BA63B983B3AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D4380DF-8359-4733-80A8-BA63B983B3AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
