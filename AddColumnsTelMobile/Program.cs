@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Data.OleDb;
 using System.Windows.Forms;
 using log4net;
@@ -14,14 +13,16 @@ namespace AddColumnsTelMobile
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("START...");
+            Form1 frm = new Form1();
+
             DBUtil dbut = new DBUtil();
             var res1 = dbut.ConnectDB();
             var res2 = dbut.AddColumnsTelMobile();
             var res3 = dbut.DisconnectDB();
-            Console.WriteLine(res1.ToString() + " " + res2.ToString() + " " + res3.ToString());
-            Console.WriteLine("FINISH!!! PRESS ANY KEY");
-            Console.ReadLine();
+
+            frm.SetLabels(res1.ToString(), res2.ToString(), res3.ToString());
+ 
+            Application.Run(frm);
         }
     }
 
